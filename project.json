@@ -1,0 +1,25 @@
+{
+  "overview": "FinVault is a high-fidelity 2026 FinTech mobile web app with a Modern Secure Minimalist design system. Features four interactive screens: Overview Dashboard, Income & Expenses Analytics, Accounts & Cashflow, and Financial Identity & Milestones. Built with glassmorphic UI, dynamic Alert Red theming, and AI-parsed transaction indicators.",
+  "features": [
+    "Overview dashboard with Safe to Spend circular progress ring",
+    "Income & Expenses donut chart with Burn Rate survival calculator",
+    "Accounts & Cashflow with bank card stack and cashflow map",
+    "Financial Identity & Milestones with gamified profile badges and roadmap",
+    "Dynamic Alert Red theming when Burn Rate drops below 1 month",
+    "AI/Spark webhook indicator on auto-parsed transactions",
+    "4-item bottom navigation with active-state glow effects",
+    "Glassmorphic cards with 24px radius and inner glow effects",
+    "Daily/Monthly/Annual view toggle on dashboard"
+  ],
+  "category": "finance",
+  "tags": [
+    "fintech",
+    "personal-finance",
+    "dashboard",
+    "design-system",
+    "glassmorphism",
+    "mobile-ui",
+    "2026"
+  ],
+  "last_updated": "2026-05-12T14:42:17.183Z"
+}
