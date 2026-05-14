@@ -4,9 +4,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { formatNaira, mockData } from "@/data/mockData";
+import { formatNaira, getBurnRateStatus, mockData } from "@/data/mockData";
 import type { FinancialGoal, FinancialProfile } from "@/data/mockData";
-import { CheckCircle2, Lock, Star, Trophy, Zap } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronDown,
+  Flame,
+  Lock,
+  Star,
+  TrendingDown,
+  TrendingUp,
+  Trophy,
+  Zap,
+} from "lucide-react";
 import { useState } from "react";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
@@ -889,6 +899,442 @@ function BadgeDialog({
   );
 }
 
+// ─── Burn Rate Section ──────────────────────────────────────────────────────
+
+function BurnRateGauge({
+  months,
+  isAlert,
+}: { months: number; isAlert: boolean }) {
+  // 0 months = empty, 6+ months = full (capped at 6 for display)
+  const clampedMonths = Math.min(months, 6);
+  const percent = (clampedMonths / 6) * 100;
+  const accentColor = isAlert
+    ? "oklch(var(--destructive))"
+    : months >= 3
+      ? "oklch(var(--accent))"
+      : "oklch(var(--primary))";
+  const trackGradient = isAlert
+    ? "linear-gradient(90deg, #C0392B 0%, #F95738 100%)"
+    : months >= 3
+      ? "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)"
+      : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between">
+        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+          Runway health
+        </span>
+        <span
+          className="text-[10px] font-semibold"
+          style={{ color: accentColor }}
+        >
+          {percent >= 80
+            ? "Excellent"
+            : percent >= 50
+              ? "Good"
+              : percent >= 30
+                ? "Fair"
+                : "Critical"}
+        </span>
+      </div>
+      {/* Track */}
+      <div
+        className="h-3 rounded-full overflow-hidden"
+        style={{ backgroundColor: "oklch(var(--muted))" }}
+      >
+        <div
+          className="h-full rounded-full transition-smooth"
+          style={{
+            width: `${percent}%`,
+            background: trackGradient,
+            boxShadow: `0 0 10px ${accentColor} / 0.5`,
+          }}
+        />
+      </div>
+      {/* Month markers */}
+      <div className="flex justify-between">
+        {[0, 1, 2, 3, 4, 5, "6+"].map((m) => (
+          <span key={m} className="text-[8px] text-muted-foreground">
+            {m}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BurnRateSection() {
+  const { totalSavings, avgMonthlyExpenses, burnRate, cashflowInflows } =
+    mockData;
+  const [expanded, setExpanded] = useState(false);
+  const [incomeSource, setIncomeSource] = useState<"total" | string>("total");
+  const isAlert = getBurnRateStatus(burnRate) === "alert";
+
+  // Compute income bases
+  const totalIncome = cashflowInflows.reduce((s, e) => s + e.amount, 0);
+  const selectedIncome =
+    incomeSource === "total"
+      ? totalIncome
+      : (cashflowInflows.find((e) => e.name === incomeSource)?.amount ??
+        totalIncome);
+
+  // Expense-to-income ratio against chosen base
+  const expenseRatio =
+    selectedIncome > 0 ? (avgMonthlyExpenses / selectedIncome) * 100 : 0;
+
+  const accentColor = isAlert
+    ? "oklch(var(--destructive))"
+    : "oklch(var(--accent))";
+  const cardBorderColor = isAlert
+    ? "oklch(var(--destructive) / 0.45)"
+    : "oklch(var(--accent) / 0.35)";
+  const cardBg = isAlert
+    ? "linear-gradient(145deg, oklch(var(--destructive) / 0.12) 0%, oklch(var(--card)) 100%)"
+    : "linear-gradient(145deg, oklch(var(--primary) / 0.12) 0%, oklch(var(--accent) / 0.06) 100%)";
+  const glowColor = isAlert
+    ? "0 0 28px oklch(var(--destructive) / 0.2), 0 8px 24px oklch(var(--destructive) / 0.1)"
+    : "0 0 28px oklch(var(--accent) / 0.2), 0 8px 24px oklch(var(--primary) / 0.1)";
+
+  return (
+    <section data-ocid="milestones.burn_rate.section">
+      <div
+        className="glow-inner rounded-[24px] overflow-hidden"
+        style={{
+          background: cardBg,
+          border: `1.5px solid ${cardBorderColor}`,
+          boxShadow: `${glowColor}, inset 0 1px 2px rgba(255,255,255,0.08)`,
+        }}
+      >
+        {/* ── Header row (always visible, clickable) ── */}
+        <button
+          type="button"
+          data-ocid="milestones.burn_rate.toggle"
+          onClick={() => setExpanded((prev) => !prev)}
+          className="w-full flex items-center gap-3 px-5 py-4 transition-smooth focus-visible:outline-none focus-visible:ring-2"
+          style={{ WebkitTapHighlightColor: "transparent" }}
+        >
+          {/* Icon */}
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{
+              background: isAlert
+                ? "oklch(var(--destructive) / 0.15)"
+                : "oklch(var(--accent) / 0.15)",
+              border: `1.5px solid ${isAlert ? "oklch(var(--destructive) / 0.3)" : "oklch(var(--accent) / 0.3)"}`,
+              boxShadow: `0 0 12px ${isAlert ? "oklch(var(--destructive) / 0.25)" : "oklch(var(--accent) / 0.25)"}`,
+            }}
+          >
+            <Flame size={16} style={{ color: accentColor }} />
+          </div>
+
+          {/* Title + pill */}
+          <div className="flex-1 min-w-0 text-left">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-sm font-bold text-foreground">
+                Burn Rate Analysis
+              </span>
+              <span
+                className="text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"
+                style={{
+                  background: isAlert
+                    ? "oklch(var(--destructive) / 0.15)"
+                    : "oklch(var(--accent) / 0.12)",
+                  color: accentColor,
+                  border: `1px solid ${isAlert ? "oklch(var(--destructive) / 0.3)" : "oklch(var(--accent) / 0.25)"}`,
+                }}
+              >
+                {burnRate.toFixed(1)} months runway
+              </span>
+            </div>
+            <p className="text-[10px] text-muted-foreground mt-0.5">
+              {expanded ? "Tap to collapse" : "Tap for full analysis"}
+            </p>
+          </div>
+
+          {/* Chevron */}
+          <ChevronDown
+            size={18}
+            className="flex-shrink-0 text-muted-foreground transition-transform duration-300"
+            style={{ transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }}
+          />
+        </button>
+
+        {/* ── Expanded detail ── */}
+        {expanded && (
+          <div className="px-5 pb-5 flex flex-col gap-5">
+            {/* Divider */}
+            <div
+              className="h-px w-full"
+              style={{ backgroundColor: `${cardBorderColor}` }}
+            />
+
+            {/* Survival time hero */}
+            <div className="flex items-center gap-4">
+              <div
+                className="flex flex-col items-center justify-center rounded-[20px] px-4 py-3 flex-shrink-0"
+                style={{
+                  background: isAlert
+                    ? "oklch(var(--destructive) / 0.12)"
+                    : "oklch(var(--accent) / 0.1)",
+                  border: `1.5px solid ${cardBorderColor}`,
+                  minWidth: "92px",
+                }}
+              >
+                <span
+                  className="text-2xl font-black leading-none tabular-nums"
+                  style={{ color: accentColor }}
+                >
+                  {burnRate.toFixed(2)}
+                </span>
+                <span className="text-[10px] font-bold text-muted-foreground mt-1">
+                  months
+                </span>
+                <span className="text-[8px] text-muted-foreground mt-0.5">
+                  survival
+                </span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-bold text-foreground leading-snug">
+                  {isAlert
+                    ? "⚠️ Critical — less than 1 month of reserves"
+                    : burnRate < 3
+                      ? "Your runway is building. Keep saving."
+                      : "Strong financial runway secured."}
+                </p>
+                <p className="text-[10px] text-muted-foreground mt-1 leading-relaxed">
+                  At your current spend rate, your savings cover{" "}
+                  <span
+                    className="font-semibold"
+                    style={{ color: accentColor }}
+                  >
+                    {burnRate.toFixed(1)} months
+                  </span>{" "}
+                  of expenses without any income.
+                </p>
+              </div>
+            </div>
+
+            {/* Runway gauge */}
+            <BurnRateGauge months={burnRate} isAlert={isAlert} />
+
+            {/* Income source selector */}
+            <div className="flex flex-col gap-2">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                Calculate % against
+              </p>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  data-ocid="milestones.burn_rate.income_source.total"
+                  onClick={() => setIncomeSource("total")}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-smooth"
+                  style={{
+                    background:
+                      incomeSource === "total"
+                        ? "oklch(var(--primary) / 0.18)"
+                        : "oklch(var(--muted) / 0.6)",
+                    color:
+                      incomeSource === "total"
+                        ? "oklch(var(--primary))"
+                        : "oklch(var(--muted-foreground))",
+                    border: `1.5px solid ${
+                      incomeSource === "total"
+                        ? "oklch(var(--primary) / 0.4)"
+                        : "oklch(var(--border) / 0.5)"
+                    }`,
+                  }}
+                >
+                  <TrendingUp size={10} /> All Income
+                </button>
+                {cashflowInflows.map((inflow) => (
+                  <button
+                    type="button"
+                    key={inflow.name}
+                    data-ocid={`milestones.burn_rate.income_source.${inflow.name.toLowerCase().replace(/\s+/g, "_")}`}
+                    onClick={() => setIncomeSource(inflow.name)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-smooth"
+                    style={{
+                      background:
+                        incomeSource === inflow.name
+                          ? "oklch(var(--primary) / 0.18)"
+                          : "oklch(var(--muted) / 0.6)",
+                      color:
+                        incomeSource === inflow.name
+                          ? "oklch(var(--primary))"
+                          : "oklch(var(--muted-foreground))",
+                      border: `1.5px solid ${
+                        incomeSource === inflow.name
+                          ? "oklch(var(--primary) / 0.4)"
+                          : "oklch(var(--border) / 0.5)"
+                      }`,
+                    }}
+                  >
+                    <span>{inflow.icon}</span>
+                    {inflow.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Stats row */}
+            <div className="grid grid-cols-2 gap-3">
+              {/* Total savings */}
+              <div
+                className="flex flex-col gap-1 px-3.5 py-3 rounded-2xl"
+                style={{
+                  background: "oklch(var(--accent) / 0.07)",
+                  border: "1px solid oklch(var(--accent) / 0.2)",
+                }}
+              >
+                <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Total Reserves
+                </span>
+                <span className="text-sm font-black text-foreground tabular-nums">
+                  {formatNaira(totalSavings)}
+                </span>
+                <span className="text-[9px] text-muted-foreground">
+                  Savings & cash
+                </span>
+              </div>
+              {/* Avg expenses */}
+              <div
+                className="flex flex-col gap-1 px-3.5 py-3 rounded-2xl"
+                style={{
+                  background: isAlert
+                    ? "oklch(var(--destructive) / 0.07)"
+                    : "oklch(var(--primary) / 0.07)",
+                  border: `1px solid ${isAlert ? "oklch(var(--destructive) / 0.2)" : "oklch(var(--primary) / 0.2)"}`,
+                }}
+              >
+                <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Avg Monthly
+                </span>
+                <span className="text-sm font-black text-foreground tabular-nums">
+                  {formatNaira(avgMonthlyExpenses)}
+                </span>
+                <span className="text-[9px] text-muted-foreground">
+                  Expenses
+                </span>
+              </div>
+            </div>
+
+            {/* Expense vs income bar */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Expense vs {incomeSource === "total" ? "Total" : incomeSource}{" "}
+                  Income
+                </span>
+                <span
+                  className="text-[10px] font-bold tabular-nums"
+                  style={{
+                    color:
+                      expenseRatio > 80
+                        ? "oklch(var(--destructive))"
+                        : expenseRatio > 60
+                          ? "#F97316"
+                          : "oklch(var(--accent))",
+                  }}
+                >
+                  {expenseRatio.toFixed(0)}%
+                </span>
+              </div>
+              <div
+                className="h-3 rounded-full overflow-hidden"
+                style={{ backgroundColor: "oklch(var(--muted))" }}
+              >
+                <div
+                  className="h-full rounded-full transition-smooth"
+                  style={{
+                    width: `${Math.min(expenseRatio, 100)}%`,
+                    background:
+                      expenseRatio > 80
+                        ? "linear-gradient(90deg, #C0392B 0%, #F95738 100%)"
+                        : expenseRatio > 60
+                          ? "linear-gradient(90deg, #d97706 0%, #f97316 100%)"
+                          : "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)",
+                    boxShadow: "0 0 8px oklch(var(--primary) / 0.3)",
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-between text-[9px] text-muted-foreground">
+                <span className="flex items-center gap-1">
+                  <TrendingDown size={9} /> {formatNaira(avgMonthlyExpenses)}{" "}
+                  spent
+                </span>
+                <span className="flex items-center gap-1">
+                  {formatNaira(selectedIncome)} income <TrendingUp size={9} />
+                </span>
+              </div>
+            </div>
+
+            {/* Formula card */}
+            <div
+              className="flex flex-col gap-2 px-4 py-3.5 rounded-2xl"
+              style={{
+                background: "oklch(var(--muted) / 0.5)",
+                border: "1px solid oklch(var(--border) / 0.5)",
+              }}
+            >
+              <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                How it's calculated
+              </span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span
+                  className="text-[11px] font-bold px-2.5 py-1 rounded-xl"
+                  style={{
+                    background: "oklch(var(--accent) / 0.1)",
+                    color: "oklch(var(--accent))",
+                    border: "1px solid oklch(var(--accent) / 0.2)",
+                  }}
+                >
+                  Total Savings
+                </span>
+                <span className="text-[11px] font-bold text-muted-foreground">
+                  ÷
+                </span>
+                <span
+                  className="text-[11px] font-bold px-2.5 py-1 rounded-xl"
+                  style={{
+                    background: "oklch(var(--primary) / 0.1)",
+                    color: "oklch(var(--primary))",
+                    border: "1px solid oklch(var(--primary) / 0.2)",
+                  }}
+                >
+                  Avg Monthly Expenses
+                </span>
+                <span className="text-[11px] font-bold text-muted-foreground">
+                  =
+                </span>
+                <span
+                  className="text-[11px] font-black px-2.5 py-1 rounded-xl"
+                  style={{
+                    background: isAlert
+                      ? "oklch(var(--destructive) / 0.12)"
+                      : "oklch(var(--accent) / 0.1)",
+                    color: accentColor,
+                    border: `1px solid ${isAlert ? "oklch(var(--destructive) / 0.25)" : "oklch(var(--accent) / 0.2)"}`,
+                  }}
+                >
+                  {burnRate.toFixed(2)} months
+                </span>
+              </div>
+              <p className="text-[9px] text-muted-foreground leading-relaxed">
+                {formatNaira(totalSavings)} ÷ {formatNaira(avgMonthlyExpenses)}{" "}
+                ={" "}
+                <span className="font-semibold" style={{ color: accentColor }}>
+                  {burnRate.toFixed(2)} months
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function MilestonesPage() {
@@ -1156,6 +1602,9 @@ export default function MilestonesPage() {
           ))}
         </div>
       </section>
+
+      {/* ── Burn Rate Analysis ────────────────────────────────────────── */}
+      <BurnRateSection />
 
       {/* Bottom spacer */}
       <div className="h-4" />

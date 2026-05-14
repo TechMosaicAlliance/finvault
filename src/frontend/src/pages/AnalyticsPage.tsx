@@ -1,5 +1,7 @@
 import { formatNaira, mockData } from "@/data/mockData";
 import {
+  CheckCircle2,
+  ChevronDown,
   Flame,
   PieChart as PieIcon,
   TrendingDown,
@@ -394,7 +396,26 @@ function IncomeView() {
 }
 
 function BudgetPlannerSection() {
-  const { expenseCategories } = mockData;
+  const { expenseCategories, cashflowInflows } = mockData;
+  const totalAllIncome = cashflowInflows.reduce((s, i) => s + i.amount, 0);
+
+  // Income source selector state: null = all sources
+  const [selectedSourceName, setSelectedSourceName] = useState<string | null>(
+    null,
+  );
+  const [selectorOpen, setSelectorOpen] = useState(false);
+
+  const selectedAmount =
+    selectedSourceName === null
+      ? totalAllIncome
+      : (cashflowInflows.find((s) => s.name === selectedSourceName)?.amount ??
+        totalAllIncome);
+
+  const selectedLabel =
+    selectedSourceName === null
+      ? `All Income Sources (${formatNaira(totalAllIncome)})`
+      : `${selectedSourceName} (${formatNaira(selectedAmount)})`;
+
   const totalBudget = expenseCategories.reduce((s, c) => s + c.budgeted, 0);
   const totalSpent = expenseCategories.reduce((s, c) => s + c.amount, 0);
   const unallocated = Math.max(totalBudget - totalSpent, 0);
@@ -425,11 +446,184 @@ function BudgetPlannerSection() {
           boxShadow: "inset 0 1px 2px rgba(255,255,255,0.06)",
         }}
       >
+        {/* Income Source Selector */}
+        <div
+          className="mb-4"
+          data-ocid="analytics.budget.income_source_selector"
+        >
+          <p className="text-[10px] font-semibold text-muted-foreground uppercase tracking-wider mb-1.5">
+            Calculate against
+          </p>
+          <div className="relative">
+            <button
+              type="button"
+              data-ocid="analytics.budget.income_source_toggle"
+              onClick={() => setSelectorOpen((o) => !o)}
+              className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold text-foreground transition-smooth"
+              style={{
+                background: "oklch(var(--card) / 0.7)",
+                border: "1px solid oklch(var(--border) / 0.6)",
+                backdropFilter: "blur(8px)",
+                boxShadow: "inset 0 1px 2px rgba(255,255,255,0.08)",
+              }}
+            >
+              <div className="flex items-center gap-2 min-w-0">
+                <span
+                  className="w-2 h-2 rounded-full flex-shrink-0"
+                  style={{
+                    backgroundColor:
+                      selectedSourceName === null
+                        ? "#2D6A4F"
+                        : (INCOME_COLORS[selectedSourceName] ?? "#2D6A4F"),
+                  }}
+                />
+                <span className="truncate">{selectedLabel}</span>
+              </div>
+              <ChevronDown
+                className="w-4 h-4 flex-shrink-0 ml-2 transition-transform duration-200"
+                style={{
+                  color: "oklch(var(--muted-foreground))",
+                  transform: selectorOpen ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              />
+            </button>
+
+            <AnimatePresence>
+              {selectorOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                  transition={{ duration: 0.18 }}
+                  className="absolute z-20 left-0 right-0 mt-1.5 rounded-xl overflow-hidden"
+                  style={{
+                    background: "oklch(var(--card) / 0.92)",
+                    border: "1px solid oklch(var(--border) / 0.7)",
+                    backdropFilter: "blur(16px)",
+                    boxShadow: "0 8px 24px oklch(var(--primary) / 0.18)",
+                  }}
+                >
+                  {/* All Sources option */}
+                  <button
+                    type="button"
+                    data-ocid="analytics.budget.source.all"
+                    onClick={() => {
+                      setSelectedSourceName(null);
+                      setSelectorOpen(false);
+                    }}
+                    className="w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold transition-smooth hover:bg-muted/40"
+                    style={{
+                      color:
+                        selectedSourceName === null
+                          ? "#2D6A4F"
+                          : "oklch(var(--foreground))",
+                    }}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span
+                        className="w-2 h-2 rounded-full bg-accent flex-shrink-0"
+                        style={{ backgroundColor: "#2D6A4F" }}
+                      />
+                      <span>All Income Sources</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 flex-shrink-0">
+                      <span
+                        className="text-xs font-bold"
+                        style={{ color: "oklch(var(--muted-foreground))" }}
+                      >
+                        {formatNaira(totalAllIncome)}
+                      </span>
+                      {selectedSourceName === null && (
+                        <CheckCircle2
+                          className="w-3.5 h-3.5"
+                          style={{ color: "#2D6A4F" }}
+                        />
+                      )}
+                    </div>
+                  </button>
+
+                  <div
+                    className="mx-3"
+                    style={{
+                      borderTop: "1px solid oklch(var(--border) / 0.4)",
+                    }}
+                  />
+
+                  {/* Individual sources */}
+                  {cashflowInflows.map((src, i) => (
+                    <button
+                      key={src.name}
+                      type="button"
+                      data-ocid={`analytics.budget.source.${i + 1}`}
+                      onClick={() => {
+                        setSelectedSourceName(src.name);
+                        setSelectorOpen(false);
+                      }}
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 text-sm font-semibold transition-smooth hover:bg-muted/40"
+                      style={{
+                        color:
+                          selectedSourceName === src.name
+                            ? (INCOME_COLORS[src.name] ?? "#2D6A4F")
+                            : "oklch(var(--foreground))",
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-2 h-2 rounded-full flex-shrink-0"
+                          style={{
+                            backgroundColor:
+                              INCOME_COLORS[src.name] ?? "#2D6A4F",
+                          }}
+                        />
+                        <span>{src.name}</span>
+                      </div>
+                      <div className="flex items-center gap-1.5 flex-shrink-0">
+                        <span
+                          className="text-xs font-bold"
+                          style={{ color: "oklch(var(--muted-foreground))" }}
+                        >
+                          {formatNaira(src.amount)}
+                        </span>
+                        {selectedSourceName === src.name && (
+                          <CheckCircle2
+                            className="w-3.5 h-3.5"
+                            style={{
+                              color: INCOME_COLORS[src.name] ?? "#2D6A4F",
+                            }}
+                          />
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Context chip showing selected base */}
+          <p className="text-[10px] text-muted-foreground mt-1.5 px-0.5">
+            Budgets calculated as % of{" "}
+            <span className="font-semibold text-foreground">
+              {formatNaira(selectedAmount)}
+            </span>
+          </p>
+        </div>
+
+        {/* Divider */}
+        <div
+          className="mb-4 border-t"
+          style={{ borderColor: "oklch(var(--border) / 0.4)" }}
+        />
+
         <div className="flex flex-col gap-4">
           {expenseCategories.map((cat, i) => {
             const targetPct = BUDGET_TARGETS[cat.name] ?? BUDGET_TARGETS.Other;
-            const targetAmount = Math.round((targetPct / 100) * totalBudget);
-            const spentPct = Math.min((cat.amount / targetAmount) * 100, 100);
+            // Use selected income source as the base for all budget calculations
+            const targetAmount = Math.round((targetPct / 100) * selectedAmount);
+            const spentPct =
+              targetAmount > 0
+                ? Math.min((cat.amount / targetAmount) * 100, 100)
+                : 0;
             const barColor = getBudgetBarColor(spentPct);
             const dotColor = CATEGORY_COLORS[cat.name] ?? cat.color;
 

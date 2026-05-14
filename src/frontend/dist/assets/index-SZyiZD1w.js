@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/OverviewPage-B_sesa_1.js","assets/label-Ca6V_-W2.js","assets/index-CNbxDuKD.js","assets/utils-BIDdo8o-.js","assets/clsx-DgYk2OaC.js","assets/dialog-CvVhU-05.js","assets/x-DXakP6Jx.js","assets/input-BtqKTnWN.js","assets/badge-Cn0Q6EId.js","assets/mockData-CWBf041B.js","assets/zap-BLjbhaOG.js","assets/trending-up-Dm-FwHMO.js","assets/AnalyticsPage-CcwyNbhE.js","assets/AccountsPage-Dl3xZgsj.js","assets/arrow-left-BN8YZalY.js","assets/MilestonesPage-CGmgCGjC.js","assets/TransactionsPage-DjorR5Vv.js","assets/SettingsPage-BfXvJp-l.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/OverviewPage-AIunTiYV.js","assets/label-Cu8RgCVa.js","assets/index-DnskHVOQ.js","assets/utils-lxxLwjQ-.js","assets/clsx-DgYk2OaC.js","assets/dialog-DN7uIMbv.js","assets/x-f_H2IFQD.js","assets/input-sDMFg_6v.js","assets/chevron-down-COT8wL27.js","assets/badge-wzkZc_00.js","assets/mockData-nIbp42dy.js","assets/zap-DVj5URdX.js","assets/trending-up-BsfyvcLY.js","assets/AnalyticsPage-DK_ZrO7p.js","assets/flame-aDVvsO1C.js","assets/AccountsPage-BCGCjhtR.js","assets/arrow-left-XSg9GjhM.js","assets/MilestonesPage-SW3rcqJX.js","assets/TransactionsPage-BnP25UU0.js","assets/SettingsPage-DVGb5l0x.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -23914,7 +23914,7 @@ const navItems = [
     icon: CreditCard,
     ocid: "nav.accounts"
   },
-  { to: "/milestones", label: "Identity", icon: User, ocid: "nav.identity" }
+  { to: "/settings", label: "Settings", icon: Settings, ocid: "nav.settings" }
 ];
 function getAvatarGlow(burnRate) {
   {
@@ -23951,30 +23951,6 @@ function Layout({ children }) {
                 className: "p-2 rounded-full text-muted-foreground hover:text-foreground transition-colors duration-200 hover:bg-muted/40",
                 "aria-label": "Search",
                 children: /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 20, strokeWidth: 1.8 })
-              }
-            ),
-            /* @__PURE__ */ jsxRuntimeExports.jsx(
-              "button",
-              {
-                type: "button",
-                "data-ocid": "header.settings_button",
-                onClick: () => navigate({ to: "/settings" }),
-                className: "p-2 rounded-full transition-colors duration-200",
-                style: {
-                  color: currentPath === "/settings" ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))",
-                  background: currentPath === "/settings" ? "oklch(var(--accent) / 0.12)" : "transparent"
-                },
-                "aria-label": "Settings",
-                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  Settings,
-                  {
-                    size: 20,
-                    strokeWidth: 1.8,
-                    style: {
-                      filter: currentPath === "/settings" ? "drop-shadow(0 0 5px oklch(var(--accent) / 0.5))" : "none"
-                    }
-                  }
-                )
               }
             ),
             /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -24126,12 +24102,12 @@ function useSettings() {
   if (!ctx) throw new Error("useSettings must be used within SettingsProvider");
   return ctx;
 }
-const OverviewPage = reactExports.lazy(() => __vitePreload(() => import("./OverviewPage-B_sesa_1.js"), true ? __vite__mapDeps([0,1,2,3,4,5,6,7,8,9,10,11]) : void 0));
-const AnalyticsPage = reactExports.lazy(() => __vitePreload(() => import("./AnalyticsPage-CcwyNbhE.js"), true ? __vite__mapDeps([12,9,11,4]) : void 0));
-const AccountsPage = reactExports.lazy(() => __vitePreload(() => import("./AccountsPage-Dl3xZgsj.js"), true ? __vite__mapDeps([13,1,2,3,4,7,9,11,14,6]) : void 0));
-const MilestonesPage = reactExports.lazy(() => __vitePreload(() => import("./MilestonesPage-CGmgCGjC.js"), true ? __vite__mapDeps([15,5,3,4,6,9,10]) : void 0));
-const TransactionsPage = reactExports.lazy(() => __vitePreload(() => import("./TransactionsPage-DjorR5Vv.js"), true ? __vite__mapDeps([16,8,2,3,4,9,10]) : void 0));
-const SettingsPage = reactExports.lazy(() => __vitePreload(() => import("./SettingsPage-BfXvJp-l.js"), true ? __vite__mapDeps([17,8,2,3,4,7,14]) : void 0));
+const OverviewPage = reactExports.lazy(() => __vitePreload(() => import("./OverviewPage-AIunTiYV.js"), true ? __vite__mapDeps([0,1,2,3,4,5,6,7,8,9,10,11,12]) : void 0));
+const AnalyticsPage = reactExports.lazy(() => __vitePreload(() => import("./AnalyticsPage-DK_ZrO7p.js"), true ? __vite__mapDeps([13,10,12,4,14,8]) : void 0));
+const AccountsPage = reactExports.lazy(() => __vitePreload(() => import("./AccountsPage-BCGCjhtR.js"), true ? __vite__mapDeps([15,1,2,3,4,7,10,12,16,6]) : void 0));
+const MilestonesPage = reactExports.lazy(() => __vitePreload(() => import("./MilestonesPage-SW3rcqJX.js"), true ? __vite__mapDeps([17,5,3,4,6,10,14,11,8,12]) : void 0));
+const TransactionsPage = reactExports.lazy(() => __vitePreload(() => import("./TransactionsPage-BnP25UU0.js"), true ? __vite__mapDeps([18,9,2,3,4,10,11]) : void 0));
+const SettingsPage = reactExports.lazy(() => __vitePreload(() => import("./SettingsPage-DVGb5l0x.js"), true ? __vite__mapDeps([19,9,2,3,4,7,16]) : void 0));
 function AppShell() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "theme-calm", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     reactExports.Suspense,

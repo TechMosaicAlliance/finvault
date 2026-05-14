@@ -31,7 +31,7 @@ const navItems = [
     icon: CreditCard,
     ocid: "nav.accounts",
   },
-  { to: "/milestones", label: "Identity", icon: User, ocid: "nav.identity" },
+  { to: "/settings", label: "Settings", icon: Settings, ocid: "nav.settings" },
 ];
 
 interface LayoutProps {
@@ -103,37 +103,7 @@ export function Layout({ children }: LayoutProps) {
               <Search size={20} strokeWidth={1.8} />
             </button>
 
-            {/* Settings */}
-            <button
-              type="button"
-              data-ocid="header.settings_button"
-              onClick={() => navigate({ to: "/settings" })}
-              className="p-2 rounded-full transition-colors duration-200"
-              style={{
-                color:
-                  currentPath === "/settings"
-                    ? "oklch(var(--accent))"
-                    : "oklch(var(--muted-foreground))",
-                background:
-                  currentPath === "/settings"
-                    ? "oklch(var(--accent) / 0.12)"
-                    : "transparent",
-              }}
-              aria-label="Settings"
-            >
-              <Settings
-                size={20}
-                strokeWidth={1.8}
-                style={{
-                  filter:
-                    currentPath === "/settings"
-                      ? "drop-shadow(0 0 5px oklch(var(--accent) / 0.5))"
-                      : "none",
-                }}
-              />
-            </button>
-
-            {/* Identity + Health Avatar */}
+            {/* Identity + Health Avatar (merged, top-right) */}
             <button
               type="button"
               data-ocid="header.identity_button"

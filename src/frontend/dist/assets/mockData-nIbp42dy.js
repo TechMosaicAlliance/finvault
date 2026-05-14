@@ -259,7 +259,11 @@ const mockData = {
 function formatNaira(amount) {
   return `₦${amount.toLocaleString("en-NG")}`;
 }
+function getBurnRateStatus(burnRate) {
+  return "calm";
+}
 export {
   formatNaira as f,
+  getBurnRateStatus as g,
   mockData as m
 };

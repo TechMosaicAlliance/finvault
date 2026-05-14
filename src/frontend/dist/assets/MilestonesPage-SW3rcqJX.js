@@ -1,21 +1,13 @@
-import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports } from "./index-BioT_-jz.js";
-import { j as Dialog, k as DialogContent, l as DialogHeader, m as DialogTitle } from "./dialog-CvVhU-05.js";
-import { m as mockData, f as formatNaira } from "./mockData-CWBf041B.js";
-import { Z as Zap } from "./zap-BLjbhaOG.js";
-import "./utils-BIDdo8o-.js";
+import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports } from "./index-SZyiZD1w.js";
+import { j as Dialog, k as DialogContent, l as DialogHeader, m as DialogTitle } from "./dialog-DN7uIMbv.js";
+import { m as mockData, f as formatNaira, g as getBurnRateStatus } from "./mockData-nIbp42dy.js";
+import { C as CircleCheck, F as Flame } from "./flame-aDVvsO1C.js";
+import { Z as Zap } from "./zap-DVj5URdX.js";
+import { C as ChevronDown } from "./chevron-down-COT8wL27.js";
+import { T as TrendingUp, a as TrendingDown } from "./trending-up-BsfyvcLY.js";
+import "./utils-lxxLwjQ-.js";
 import "./clsx-DgYk2OaC.js";
-import "./x-DXakP6Jx.js";
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$3 = [
-  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
-  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
-];
-const CircleCheck = createLucideIcon("circle-check", __iconNode$3);
+import "./x-f_H2IFQD.js";
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -886,6 +878,379 @@ function BadgeDialog({
     }
   ) });
 }
+function BurnRateGauge({
+  months,
+  isAlert
+}) {
+  const clampedMonths = Math.min(months, 6);
+  const percent = clampedMonths / 6 * 100;
+  const accentColor = isAlert ? "oklch(var(--destructive))" : months >= 3 ? "oklch(var(--accent))" : "oklch(var(--primary))";
+  const trackGradient = isAlert ? "linear-gradient(90deg, #C0392B 0%, #F95738 100%)" : months >= 3 ? "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)" : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider", children: "Runway health" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "span",
+        {
+          className: "text-[10px] font-semibold",
+          style: { color: accentColor },
+          children: percent >= 80 ? "Excellent" : percent >= 50 ? "Good" : percent >= 30 ? "Fair" : "Critical"
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "h-3 rounded-full overflow-hidden",
+        style: { backgroundColor: "oklch(var(--muted))" },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "h-full rounded-full transition-smooth",
+            style: {
+              width: `${percent}%`,
+              background: trackGradient,
+              boxShadow: `0 0 10px ${accentColor} / 0.5`
+            }
+          }
+        )
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex justify-between", children: [0, 1, 2, 3, 4, 5, "6+"].map((m) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[8px] text-muted-foreground", children: m }, m)) })
+  ] });
+}
+function BurnRateSection() {
+  var _a;
+  const { totalSavings, avgMonthlyExpenses, burnRate, cashflowInflows } = mockData;
+  const [expanded, setExpanded] = reactExports.useState(false);
+  const [incomeSource, setIncomeSource] = reactExports.useState("total");
+  const isAlert = getBurnRateStatus() === "alert";
+  const totalIncome = cashflowInflows.reduce((s, e) => s + e.amount, 0);
+  const selectedIncome = incomeSource === "total" ? totalIncome : ((_a = cashflowInflows.find((e) => e.name === incomeSource)) == null ? void 0 : _a.amount) ?? totalIncome;
+  const expenseRatio = selectedIncome > 0 ? avgMonthlyExpenses / selectedIncome * 100 : 0;
+  const accentColor = "oklch(var(--accent))";
+  const cardBorderColor = "oklch(var(--accent) / 0.35)";
+  const cardBg = "linear-gradient(145deg, oklch(var(--primary) / 0.12) 0%, oklch(var(--accent) / 0.06) 100%)";
+  const glowColor = "0 0 28px oklch(var(--accent) / 0.2), 0 8px 24px oklch(var(--primary) / 0.1)";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { "data-ocid": "milestones.burn_rate.section", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "glow-inner rounded-[24px] overflow-hidden",
+      style: {
+        background: cardBg,
+        border: `1.5px solid ${cardBorderColor}`,
+        boxShadow: `${glowColor}, inset 0 1px 2px rgba(255,255,255,0.08)`
+      },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            "data-ocid": "milestones.burn_rate.toggle",
+            onClick: () => setExpanded((prev) => !prev),
+            className: "w-full flex items-center gap-3 px-5 py-4 transition-smooth focus-visible:outline-none focus-visible:ring-2",
+            style: { WebkitTapHighlightColor: "transparent" },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0",
+                  style: {
+                    background: "oklch(var(--accent) / 0.15)",
+                    border: `1.5px solid ${"oklch(var(--accent) / 0.3)"}`,
+                    boxShadow: `0 0 12px ${"oklch(var(--accent) / 0.25)"}`
+                  },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { size: 16, style: { color: accentColor } })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0 text-left", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-bold text-foreground", children: "Burn Rate Analysis" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "span",
+                    {
+                      className: "text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0",
+                      style: {
+                        background: "oklch(var(--accent) / 0.12)",
+                        color: accentColor,
+                        border: `1px solid ${"oklch(var(--accent) / 0.25)"}`
+                      },
+                      children: [
+                        burnRate.toFixed(1),
+                        " months runway"
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: expanded ? "Tap to collapse" : "Tap for full analysis" })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                ChevronDown,
+                {
+                  size: 18,
+                  className: "flex-shrink-0 text-muted-foreground transition-transform duration-300",
+                  style: { transform: expanded ? "rotate(180deg)" : "rotate(0deg)" }
+                }
+              )
+            ]
+          }
+        ),
+        expanded && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-5 pb-5 flex flex-col gap-5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "h-px w-full",
+              style: { backgroundColor: `${cardBorderColor}` }
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col items-center justify-center rounded-[20px] px-4 py-3 flex-shrink-0",
+                style: {
+                  background: "oklch(var(--accent) / 0.1)",
+                  border: `1.5px solid ${cardBorderColor}`,
+                  minWidth: "92px"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "text-2xl font-black leading-none tabular-nums",
+                      style: { color: accentColor },
+                      children: burnRate.toFixed(2)
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-muted-foreground mt-1", children: "months" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[8px] text-muted-foreground mt-0.5", children: "survival" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-bold text-foreground leading-snug", children: "Strong financial runway secured." }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground mt-1 leading-relaxed", children: [
+                "At your current spend rate, your savings cover",
+                " ",
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "span",
+                  {
+                    className: "font-semibold",
+                    style: { color: accentColor },
+                    children: [
+                      burnRate.toFixed(1),
+                      " months"
+                    ]
+                  }
+                ),
+                " ",
+                "of expenses without any income."
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(BurnRateGauge, { months: burnRate, isAlert }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider", children: "Calculate % against" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "button",
+                {
+                  type: "button",
+                  "data-ocid": "milestones.burn_rate.income_source.total",
+                  onClick: () => setIncomeSource("total"),
+                  className: "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-smooth",
+                  style: {
+                    background: incomeSource === "total" ? "oklch(var(--primary) / 0.18)" : "oklch(var(--muted) / 0.6)",
+                    color: incomeSource === "total" ? "oklch(var(--primary))" : "oklch(var(--muted-foreground))",
+                    border: `1.5px solid ${incomeSource === "total" ? "oklch(var(--primary) / 0.4)" : "oklch(var(--border) / 0.5)"}`
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 10 }),
+                    " All Income"
+                  ]
+                }
+              ),
+              cashflowInflows.map((inflow) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "button",
+                {
+                  type: "button",
+                  "data-ocid": `milestones.burn_rate.income_source.${inflow.name.toLowerCase().replace(/\s+/g, "_")}`,
+                  onClick: () => setIncomeSource(inflow.name),
+                  className: "flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[10px] font-bold transition-smooth",
+                  style: {
+                    background: incomeSource === inflow.name ? "oklch(var(--primary) / 0.18)" : "oklch(var(--muted) / 0.6)",
+                    color: incomeSource === inflow.name ? "oklch(var(--primary))" : "oklch(var(--muted-foreground))",
+                    border: `1.5px solid ${incomeSource === inflow.name ? "oklch(var(--primary) / 0.4)" : "oklch(var(--border) / 0.5)"}`
+                  },
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: inflow.icon }),
+                    inflow.name
+                  ]
+                },
+                inflow.name
+              ))
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-2 gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col gap-1 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--accent) / 0.07)",
+                  border: "1px solid oklch(var(--accent) / 0.2)"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "Total Reserves" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-black text-foreground tabular-nums", children: formatNaira(totalSavings) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] text-muted-foreground", children: "Savings & cash" })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col gap-1 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--primary) / 0.07)",
+                  border: `1px solid ${"oklch(var(--primary) / 0.2)"}`
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "Avg Monthly" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-black text-foreground tabular-nums", children: formatNaira(avgMonthlyExpenses) }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] text-muted-foreground", children: "Expenses" })
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider", children: [
+                "Expense vs ",
+                incomeSource === "total" ? "Total" : incomeSource,
+                " ",
+                "Income"
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "span",
+                {
+                  className: "text-[10px] font-bold tabular-nums",
+                  style: {
+                    color: expenseRatio > 80 ? "oklch(var(--destructive))" : expenseRatio > 60 ? "#F97316" : "oklch(var(--accent))"
+                  },
+                  children: [
+                    expenseRatio.toFixed(0),
+                    "%"
+                  ]
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "h-3 rounded-full overflow-hidden",
+                style: { backgroundColor: "oklch(var(--muted))" },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "h-full rounded-full transition-smooth",
+                    style: {
+                      width: `${Math.min(expenseRatio, 100)}%`,
+                      background: expenseRatio > 80 ? "linear-gradient(90deg, #C0392B 0%, #F95738 100%)" : expenseRatio > 60 ? "linear-gradient(90deg, #d97706 0%, #f97316 100%)" : "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)",
+                      boxShadow: "0 0 8px oklch(var(--primary) / 0.3)"
+                    }
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between text-[9px] text-muted-foreground", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingDown, { size: 9 }),
+                " ",
+                formatNaira(avgMonthlyExpenses),
+                " ",
+                "spent"
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "flex items-center gap-1", children: [
+                formatNaira(selectedIncome),
+                " income ",
+                /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { size: 9 })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex flex-col gap-2 px-4 py-3.5 rounded-2xl",
+              style: {
+                background: "oklch(var(--muted) / 0.5)",
+                border: "1px solid oklch(var(--border) / 0.5)"
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "How it's calculated" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "text-[11px] font-bold px-2.5 py-1 rounded-xl",
+                      style: {
+                        background: "oklch(var(--accent) / 0.1)",
+                        color: "oklch(var(--accent))",
+                        border: "1px solid oklch(var(--accent) / 0.2)"
+                      },
+                      children: "Total Savings"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] font-bold text-muted-foreground", children: "÷" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: "text-[11px] font-bold px-2.5 py-1 rounded-xl",
+                      style: {
+                        background: "oklch(var(--primary) / 0.1)",
+                        color: "oklch(var(--primary))",
+                        border: "1px solid oklch(var(--primary) / 0.2)"
+                      },
+                      children: "Avg Monthly Expenses"
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[11px] font-bold text-muted-foreground", children: "=" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "span",
+                    {
+                      className: "text-[11px] font-black px-2.5 py-1 rounded-xl",
+                      style: {
+                        background: "oklch(var(--accent) / 0.1)",
+                        color: accentColor,
+                        border: `1px solid ${"oklch(var(--accent) / 0.2)"}`
+                      },
+                      children: [
+                        burnRate.toFixed(2),
+                        " months"
+                      ]
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[9px] text-muted-foreground leading-relaxed", children: [
+                  formatNaira(totalSavings),
+                  " ÷ ",
+                  formatNaira(avgMonthlyExpenses),
+                  " ",
+                  "=",
+                  " ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-semibold", style: { color: accentColor }, children: [
+                    burnRate.toFixed(2),
+                    " months"
+                  ] })
+                ] })
+              ]
+            }
+          )
+        ] })
+      ]
+    }
+  ) });
+}
 function MilestonesPage() {
   const { profiles, goals } = mockData;
   const [activeProfileId, setActiveProfileId] = reactExports.useState(
@@ -1134,6 +1499,7 @@ function MilestonesPage() {
         ))
       ] })
     ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(BurnRateSection, {}),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-4" })
   ] });
 }
