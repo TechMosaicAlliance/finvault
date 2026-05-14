@@ -1,4 +1,4 @@
-import { c as createLucideIcon } from "./index-DPcbY0g3.js";
+import { c as createLucideIcon } from "./index-BioT_-jz.js";
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -21,21 +21,7 @@ const __iconNode = [
   ["path", { d: "m22 7-8.5 8.5-5-5L2 17", key: "1t1m79" }]
 ];
 const TrendingUp = createLucideIcon("trending-up", __iconNode);
-function r(e) {
-  var t, f, n = "";
-  if ("string" == typeof e || "number" == typeof e) n += e;
-  else if ("object" == typeof e) if (Array.isArray(e)) {
-    var o = e.length;
-    for (t = 0; t < o; t++) e[t] && (f = r(e[t])) && (n && (n += " "), n += f);
-  } else for (f in e) e[f] && (n && (n += " "), n += f);
-  return n;
-}
-function clsx() {
-  for (var e, t, f = 0, n = "", o = arguments.length; f < o; f++) (e = arguments[f]) && (t = r(e)) && (n && (n += " "), n += t);
-  return n;
-}
 export {
   TrendingUp as T,
-  TrendingDown as a,
-  clsx as c
+  TrendingDown as a
 };

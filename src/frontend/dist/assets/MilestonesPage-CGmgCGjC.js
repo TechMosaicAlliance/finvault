@@ -1,0 +1,1142 @@
+import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports } from "./index-BioT_-jz.js";
+import { j as Dialog, k as DialogContent, l as DialogHeader, m as DialogTitle } from "./dialog-CvVhU-05.js";
+import { m as mockData, f as formatNaira } from "./mockData-CWBf041B.js";
+import { Z as Zap } from "./zap-BLjbhaOG.js";
+import "./utils-BIDdo8o-.js";
+import "./clsx-DgYk2OaC.js";
+import "./x-DXakP6Jx.js";
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$3 = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["path", { d: "m9 12 2 2 4-4", key: "dzmm74" }]
+];
+const CircleCheck = createLucideIcon("circle-check", __iconNode$3);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$2 = [
+  ["rect", { width: "18", height: "11", x: "3", y: "11", rx: "2", ry: "2", key: "1w4ew1" }],
+  ["path", { d: "M7 11V7a5 5 0 0 1 10 0v4", key: "fwvmzm" }]
+];
+const Lock = createLucideIcon("lock", __iconNode$2);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$1 = [
+  [
+    "path",
+    {
+      d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
+      key: "r04s7s"
+    }
+  ]
+];
+const Star = createLucideIcon("star", __iconNode$1);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode = [
+  ["path", { d: "M6 9H4.5a2.5 2.5 0 0 1 0-5H6", key: "17hqa7" }],
+  ["path", { d: "M18 9h1.5a2.5 2.5 0 0 0 0-5H18", key: "lmptdp" }],
+  ["path", { d: "M4 22h16", key: "57wxv0" }],
+  ["path", { d: "M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22", key: "1nw9bq" }],
+  ["path", { d: "M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22", key: "1np0yb" }],
+  ["path", { d: "M18 2H6v7a6 6 0 0 0 12 0V2Z", key: "u46fv3" }]
+];
+const Trophy = createLucideIcon("trophy", __iconNode);
+const roadmapNodes = [
+  { label: "Where You Started", sublabel: "Jan 2023", status: "done" },
+  {
+    label: "Emergency Fund Built",
+    sublabel: "₦500K saved",
+    status: "done"
+  },
+  {
+    label: "Investment Portfolio",
+    sublabel: "3 active funds",
+    status: "done"
+  },
+  {
+    label: "Current Position",
+    sublabel: "You are here",
+    status: "current"
+  },
+  {
+    label: "Dream Destination",
+    sublabel: "Financial Freedom",
+    status: "future"
+  }
+];
+const achievementBadges = [
+  {
+    icon: "💰",
+    label: "First ₦1M Saved",
+    sublabel: "Milestone",
+    unlocked: true,
+    gradient: "linear-gradient(135deg, #2D6A4F 0%, #1A2B4C 100%)"
+  },
+  {
+    icon: "🔥",
+    label: "3-Month Streak",
+    sublabel: "Discipline",
+    unlocked: true,
+    gradient: "linear-gradient(135deg, #F95738 0%, #C0392B 100%)"
+  },
+  {
+    icon: "📊",
+    label: "Budget Master",
+    sublabel: "Control",
+    unlocked: true,
+    gradient: "linear-gradient(135deg, #1A2B4C 0%, #2D6A4F 100%)"
+  },
+  {
+    icon: "🏡",
+    label: "Property Owner",
+    sublabel: "Wealth",
+    unlocked: false,
+    gradient: ""
+  },
+  {
+    icon: "💳",
+    label: "Debt Free",
+    sublabel: "Freedom",
+    unlocked: false,
+    gradient: ""
+  },
+  {
+    icon: "💎",
+    label: "₦10M Club",
+    sublabel: "Elite",
+    unlocked: false,
+    gradient: ""
+  }
+];
+function ProfileChip({
+  profile,
+  isActive,
+  onClick,
+  index
+}) {
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "button",
+    {
+      type: "button",
+      "data-ocid": `milestones.profile.item.${index + 1}`,
+      onClick,
+      className: "flex flex-col items-center gap-1 px-3 py-2.5 rounded-2xl flex-shrink-0 transition-smooth",
+      style: {
+        minWidth: "62px",
+        background: isActive ? "linear-gradient(135deg, oklch(var(--primary) / 0.25), oklch(var(--accent) / 0.15))" : "oklch(var(--card) / 0.5)",
+        border: `1.5px solid ${isActive ? "oklch(var(--accent))" : "oklch(var(--border) / 0.6)"}`,
+        boxShadow: isActive ? "0 0 14px oklch(var(--accent) / 0.35), inset 0 1px 3px rgba(255,255,255,0.1)" : "none"
+      },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xl leading-none", children: profile.icon }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "span",
+          {
+            className: "text-[9px] font-bold leading-tight text-center",
+            style: {
+              color: isActive ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))"
+            },
+            children: profile.name.replace("The ", "")
+          }
+        )
+      ]
+    }
+  );
+}
+function getConsistencyRating(progressPercent) {
+  if (progressPercent > 50) return 72;
+  if (progressPercent >= 25) return 48;
+  return 21;
+}
+function getMonthsToCompletion(goal) {
+  const remaining = goal.targetAmount - goal.currentAmount;
+  const monthlyContrib = goal.currentAmount / 6;
+  if (monthlyContrib <= 0) return "30+";
+  const months = remaining / monthlyContrib;
+  if (months > 30) return "30+";
+  return Math.ceil(months).toString();
+}
+function ConsistencyArc({ percent }) {
+  const r = 28;
+  const circ = 2 * Math.PI * r;
+  const filled = percent / 100 * circ * 0.75;
+  const isHigh = percent >= 60;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "div",
+    {
+      className: "relative flex items-center justify-center",
+      style: { width: 80, height: 80 },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "svg",
+          {
+            width: "80",
+            height: "80",
+            viewBox: "0 0 80 80",
+            style: { transform: "rotate(135deg)" },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("title", { children: "Consistency arc" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "circle",
+                {
+                  cx: "40",
+                  cy: "40",
+                  r,
+                  fill: "none",
+                  strokeWidth: "7",
+                  style: { stroke: "oklch(var(--muted))" },
+                  strokeDasharray: `${circ * 0.75} ${circ}`,
+                  strokeLinecap: "round"
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "circle",
+                {
+                  cx: "40",
+                  cy: "40",
+                  r,
+                  fill: "none",
+                  strokeWidth: "7",
+                  style: {
+                    stroke: isHigh ? "oklch(var(--accent))" : "oklch(var(--primary))"
+                  },
+                  strokeDasharray: `${filled} ${circ}`,
+                  strokeLinecap: "round"
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "absolute inset-0 flex flex-col items-center justify-center", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "span",
+            {
+              className: "text-base font-bold",
+              style: {
+                color: isHigh ? "oklch(var(--accent))" : "oklch(var(--primary))"
+              },
+              children: [
+                percent,
+                "%"
+              ]
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[8px] text-muted-foreground font-medium", children: "consist." })
+        ] })
+      ]
+    }
+  );
+}
+function GoalDetailDialog({
+  goal,
+  open,
+  onClose
+}) {
+  const remaining = goal.targetAmount - goal.currentAmount;
+  const consistency = getConsistencyRating(goal.progressPercent);
+  const monthsToComplete = getMonthsToCompletion(goal);
+  const isHighProgress = goal.progressPercent >= 60;
+  const gradientFill = isHighProgress ? "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)" : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Dialog, { open, onOpenChange: (v) => !v && onClose(), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    DialogContent,
+    {
+      "data-ocid": "milestones.goal_detail.dialog",
+      className: "max-w-[360px] mx-auto rounded-[24px] border-0 p-0 overflow-hidden",
+      style: {
+        background: "linear-gradient(160deg, oklch(var(--card)) 0%, oklch(var(--background)) 100%)",
+        border: "1.5px solid oklch(var(--border) / 0.8)",
+        boxShadow: "0 24px 64px oklch(var(--primary) / 0.25), 0 0 0 1px oklch(var(--border) / 0.3)"
+      },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "w-full px-6 pt-6 pb-5 flex items-center gap-4",
+            style: {
+              background: isHighProgress ? "linear-gradient(135deg, oklch(var(--accent) / 0.15), oklch(var(--accent) / 0.05))" : "linear-gradient(135deg, oklch(var(--primary) / 0.15), oklch(var(--primary) / 0.05))",
+              borderBottom: "1px solid oklch(var(--border) / 0.4)"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0",
+                  style: {
+                    background: isHighProgress ? "oklch(var(--accent) / 0.18)" : "oklch(var(--primary) / 0.18)",
+                    border: `2px solid ${isHighProgress ? "oklch(var(--accent) / 0.45)" : "oklch(var(--primary) / 0.35)"}`,
+                    boxShadow: `0 0 16px ${isHighProgress ? "oklch(var(--accent) / 0.3)" : "oklch(var(--primary) / 0.25)"}`
+                  },
+                  children: goal.icon
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(DialogTitle, { className: "text-base font-bold text-foreground leading-tight", children: goal.name }) }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: [
+                  "Target: ",
+                  goal.targetDate
+                ] }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-1 mt-1.5", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "span",
+                  {
+                    className: "text-[9px] font-bold px-2 py-0.5 rounded-full",
+                    style: {
+                      background: isHighProgress ? "oklch(var(--accent) / 0.15)" : "oklch(var(--primary) / 0.15)",
+                      color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))",
+                      border: `1px solid ${isHighProgress ? "oklch(var(--accent) / 0.3)" : "oklch(var(--primary) / 0.3)"}`
+                    },
+                    children: [
+                      goal.progressPercent,
+                      "% complete"
+                    ]
+                  }
+                ) })
+              ] })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-5 flex flex-col gap-5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(ConsistencyArc, { percent: consistency }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1", children: "Completion Forecast" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-sm font-bold text-foreground leading-snug", children: [
+                monthsToComplete === "30+" ? "30+ months" : `${monthsToComplete} month${monthsToComplete === "1" ? "" : "s"}`,
+                " ",
+                "remaining"
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: "At current pace" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider", children: "Saved vs Target" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-muted-foreground", children: [
+                formatNaira(remaining),
+                " remaining"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "h-3 rounded-full overflow-hidden",
+                style: { backgroundColor: "oklch(var(--muted))" },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "h-full rounded-full transition-smooth",
+                    style: {
+                      width: `${goal.progressPercent}%`,
+                      background: gradientFill,
+                      boxShadow: isHighProgress ? "0 0 10px oklch(var(--accent) / 0.5)" : "0 0 10px oklch(var(--primary) / 0.4)"
+                    }
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "span",
+                {
+                  className: "text-xs font-bold",
+                  style: {
+                    color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))"
+                  },
+                  children: formatNaira(goal.currentAmount)
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] text-muted-foreground", children: formatNaira(goal.targetAmount) })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+            "div",
+            {
+              className: "flex items-center gap-2.5 px-3 py-3 rounded-2xl",
+              style: {
+                background: isHighProgress ? "oklch(var(--accent) / 0.08)" : "oklch(var(--primary) / 0.08)",
+                border: `1px solid ${isHighProgress ? "oklch(var(--accent) / 0.2)" : "oklch(var(--primary) / 0.2)"}`
+              },
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Zap,
+                  {
+                    size: 14,
+                    style: {
+                      color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))",
+                      flexShrink: 0
+                    }
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[11px] text-foreground font-medium", children: [
+                  "Monthly contribution:",
+                  " ",
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold", children: formatNaira(Math.round(goal.currentAmount / 6)) }),
+                  " ",
+                  "· Keep going!"
+                ] })
+              ]
+            }
+          )
+        ] })
+      ]
+    }
+  ) });
+}
+function GoalCard({ goal, index }) {
+  const [dialogOpen, setDialogOpen] = reactExports.useState(false);
+  const remaining = goal.targetAmount - goal.currentAmount;
+  const isHighProgress = goal.progressPercent >= 60;
+  const gradientFill = isHighProgress ? "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)" : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      GoalDetailDialog,
+      {
+        goal,
+        open: dialogOpen,
+        onClose: () => setDialogOpen(false)
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "button",
+      {
+        type: "button",
+        "data-ocid": `milestones.goal.item.${index + 1}`,
+        onClick: () => setDialogOpen(true),
+        className: "w-full text-left glass-card glow-inner p-5 flex flex-col gap-4 transition-smooth hover:scale-[1.01] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2",
+        style: { WebkitTapHighlightColor: "transparent" },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start justify-between gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-11 h-11 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0",
+                  style: {
+                    background: isHighProgress ? "linear-gradient(135deg, oklch(var(--accent) / 0.2), oklch(var(--accent) / 0.05))" : "linear-gradient(135deg, oklch(var(--primary) / 0.2), oklch(var(--primary) / 0.05))",
+                    border: `1.5px solid ${isHighProgress ? "oklch(var(--accent) / 0.4)" : "oklch(var(--primary) / 0.3)"}`
+                  },
+                  children: goal.icon
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-bold text-foreground leading-tight", children: goal.name }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: [
+                  "Target: ",
+                  goal.targetDate
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full",
+                style: {
+                  background: isHighProgress ? "oklch(var(--accent) / 0.12)" : "oklch(var(--primary) / 0.12)",
+                  border: `1px solid ${isHighProgress ? "oklch(var(--accent) / 0.3)" : "oklch(var(--primary) / 0.3)"}`
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Star,
+                    {
+                      size: 10,
+                      style: {
+                        color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))"
+                      }
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                    "span",
+                    {
+                      className: "text-xs font-bold",
+                      style: {
+                        color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))"
+                      },
+                      children: [
+                        goal.progressPercent,
+                        "%"
+                      ]
+                    }
+                  )
+                ]
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "h-3 rounded-full overflow-hidden",
+                style: { backgroundColor: "oklch(var(--muted))" },
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "h-full rounded-full transition-smooth",
+                    style: {
+                      width: `${goal.progressPercent}%`,
+                      background: gradientFill,
+                      boxShadow: isHighProgress ? "0 0 10px oklch(var(--accent) / 0.5)" : "0 0 10px oklch(var(--primary) / 0.4)"
+                    }
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "span",
+                {
+                  className: "text-[11px] font-semibold",
+                  style: {
+                    color: isHighProgress ? "oklch(var(--accent))" : "oklch(var(--primary))"
+                  },
+                  children: [
+                    formatNaira(goal.currentAmount),
+                    " saved"
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-muted-foreground", children: [
+                formatNaira(goal.targetAmount),
+                " goal"
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl",
+                style: { backgroundColor: "oklch(var(--muted) / 0.7)" },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(Zap, { size: 10, className: "text-muted-foreground" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-muted-foreground font-medium", children: [
+                    formatNaira(remaining),
+                    " to go · Tap for details"
+                  ] })
+                ]
+              }
+            )
+          ] })
+        ]
+      }
+    )
+  ] });
+}
+function RoadmapNode({
+  node,
+  index: _index,
+  isLast
+}) {
+  const isDone = node.status === "done";
+  const isCurrent = node.status === "current";
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-stretch gap-4", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "flex flex-col items-center",
+        style: { width: "32px", flexShrink: 0 },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+              style: {
+                background: isDone ? "linear-gradient(135deg, #2D6A4F, #52c788)" : isCurrent ? "linear-gradient(135deg, #1A2B4C, #3a6bc9)" : "oklch(var(--muted))",
+                border: isCurrent ? "2px solid oklch(var(--primary))" : "2px solid transparent",
+                boxShadow: isCurrent ? "0 0 16px oklch(var(--primary) / 0.6), 0 0 32px oklch(var(--primary) / 0.25)" : "none"
+              },
+              children: isDone ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { size: 14, color: "white" }) : isCurrent ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-2.5 h-2.5 rounded-full",
+                  style: {
+                    backgroundColor: "white",
+                    boxShadow: "0 0 6px rgba(255,255,255,0.8)",
+                    animation: "pulse 2s infinite"
+                  }
+                }
+              ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+                Lock,
+                {
+                  size: 11,
+                  style: { color: "oklch(var(--muted-foreground))" }
+                }
+              )
+            }
+          ),
+          !isLast && /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "div",
+            {
+              className: "w-0.5 flex-1",
+              style: {
+                minHeight: "20px",
+                background: isDone ? "linear-gradient(180deg, oklch(var(--accent)) 0%, oklch(var(--primary) / 0.5) 100%)" : "oklch(var(--border))",
+                marginTop: "2px"
+              }
+            }
+          )
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 pb-4 min-w-0", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "p",
+        {
+          className: "text-sm font-bold leading-tight",
+          style: {
+            color: isDone ? "oklch(var(--foreground))" : isCurrent ? "oklch(var(--primary))" : "oklch(var(--muted-foreground))"
+          },
+          children: node.label
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: node.sublabel }),
+      isCurrent && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: "inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold",
+          style: {
+            backgroundColor: "oklch(var(--primary) / 0.15)",
+            color: "oklch(var(--primary))",
+            border: "1px solid oklch(var(--primary) / 0.25)"
+          },
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "w-1.5 h-1.5 rounded-full",
+                style: {
+                  backgroundColor: "oklch(var(--primary))",
+                  animation: "pulse 2s infinite"
+                }
+              }
+            ),
+            "Active"
+          ]
+        }
+      ),
+      node.status === "future" && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] text-muted-foreground italic mt-0.5 block", children: "Unlock by reaching your goals" })
+    ] }),
+    isDone && /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        className: "flex-shrink-0 self-start mt-0.5 px-2 py-0.5 rounded-full text-[9px] font-bold",
+        style: {
+          backgroundColor: "oklch(var(--accent) / 0.12)",
+          color: "oklch(var(--accent))",
+          border: "1px solid oklch(var(--accent) / 0.25)"
+        },
+        children: "✓ Done"
+      }
+    )
+  ] });
+}
+const badgeDetails = [
+  {
+    what: "Saved your first ₦1 million — a landmark achievement in your financial journey.",
+    when: "March 2025",
+    how: "Accumulated ₦1,000,000 across all savings accounts and goals.",
+    unlockRequirement: "Accumulate ₦1,000,000 in total savings."
+  },
+  {
+    what: "Maintained a perfect 3-month saving streak without missing a single contribution.",
+    when: "January 2025",
+    how: "Made consistent monthly contributions for 3 consecutive months.",
+    unlockRequirement: "Make savings contributions every month for 3 months straight."
+  },
+  {
+    what: "Stayed within budget across all expense categories for a full month.",
+    when: "April 2025",
+    how: "Tracked all spending and kept every category under its planned budget.",
+    unlockRequirement: "Stay under budget in every expense category for one full month."
+  },
+  {
+    what: "Own a piece of property — land, house, or real estate investment.",
+    when: "",
+    how: "",
+    unlockRequirement: "Log a property purchase or land ownership worth ₦2M or more."
+  },
+  {
+    what: "Eliminate all outstanding debt and liabilities from your financial profile.",
+    when: "",
+    how: "",
+    unlockRequirement: "Zero out all logged debt entries in the Accounts section."
+  },
+  {
+    what: "Reach a total net worth of ₦10 million across all accounts and investments.",
+    when: "",
+    how: "",
+    unlockRequirement: "Accumulate ₦10,000,000 total across all linked accounts and goals."
+  }
+];
+function getLockedProgress(badgeIndex) {
+  const seeds = [42, 58, 31, 65, 47];
+  return seeds[badgeIndex % seeds.length] ?? 38;
+}
+function BadgeDialog({
+  badge,
+  badgeIndex,
+  open,
+  onClose
+}) {
+  const details = badgeDetails[badgeIndex];
+  const lockedProgress = getLockedProgress(badgeIndex);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(Dialog, { open, onOpenChange: (v) => !v && onClose(), children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    DialogContent,
+    {
+      "data-ocid": "milestones.badge_detail.dialog",
+      className: "max-w-[360px] mx-auto rounded-[24px] border-0 p-0 overflow-hidden",
+      style: {
+        background: "linear-gradient(160deg, oklch(var(--card)) 0%, oklch(var(--background)) 100%)",
+        border: "1.5px solid oklch(var(--border) / 0.8)",
+        boxShadow: "0 24px 64px rgba(0,0,0,0.2), 0 0 0 1px oklch(var(--border) / 0.3)"
+      },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "px-6 pt-6 pb-5 flex flex-col items-center gap-3",
+            style: {
+              background: badge.unlocked ? `${badge.gradient}` : "oklch(var(--muted) / 0.5)",
+              borderBottom: "1px solid oklch(var(--border) / 0.4)",
+              filter: badge.unlocked ? "none" : "grayscale(1)"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-16 h-16 rounded-full flex items-center justify-center text-3xl",
+                  style: {
+                    background: badge.unlocked ? "rgba(255,255,255,0.15)" : "oklch(var(--muted))",
+                    boxShadow: badge.unlocked ? "0 0 20px rgba(255,255,255,0.25)" : "none",
+                    border: badge.unlocked ? "2px solid rgba(255,255,255,0.2)" : "2px solid oklch(var(--border))"
+                  },
+                  children: badge.icon
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(DialogHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                DialogTitle,
+                {
+                  className: "text-base font-bold text-center",
+                  style: {
+                    color: badge.unlocked ? "rgba(255,255,255,0.95)" : "oklch(var(--foreground))"
+                  },
+                  children: badge.label
+                }
+              ) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "span",
+                {
+                  className: "text-[9px] font-bold px-2.5 py-0.5 rounded-full",
+                  style: {
+                    background: badge.unlocked ? "rgba(255,255,255,0.15)" : "oklch(var(--border))",
+                    color: badge.unlocked ? "rgba(255,255,255,0.8)" : "oklch(var(--muted-foreground))"
+                  },
+                  children: [
+                    badge.sublabel,
+                    " ",
+                    badge.unlocked ? "· Unlocked" : "· Locked"
+                  ]
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-5 flex flex-col gap-4", children: badge.unlocked ? (
+          // ── Unlocked content
+          /* @__PURE__ */ jsxRuntimeExports.jsx(jsxRuntimeExports.Fragment, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-3", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col gap-1 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--accent) / 0.08)",
+                  border: "1px solid oklch(var(--accent) / 0.2)"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "What" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-foreground font-medium leading-relaxed", children: details == null ? void 0 : details.what })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex items-center gap-3 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--primary) / 0.08)",
+                  border: "1px solid oklch(var(--primary) / 0.2)"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    Trophy,
+                    {
+                      size: 14,
+                      style: { color: "oklch(var(--primary))", flexShrink: 0 }
+                    }
+                  ),
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider block", children: "When" }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-foreground font-bold", children: details == null ? void 0 : details.when })
+                  ] })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col gap-1 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--muted) / 0.7)",
+                  border: "1px solid oklch(var(--border) / 0.5)"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "How" }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-muted-foreground font-medium leading-relaxed", children: details == null ? void 0 : details.how })
+                ]
+              }
+            )
+          ] }) })
+        ) : (
+          // ── Locked content
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs(
+              "div",
+              {
+                className: "flex flex-col gap-1.5 px-3.5 py-3 rounded-2xl",
+                style: {
+                  background: "oklch(var(--muted) / 0.7)",
+                  border: "1px solid oklch(var(--border) / 0.5)"
+                },
+                children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      Lock,
+                      {
+                        size: 12,
+                        className: "text-muted-foreground flex-shrink-0"
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-bold text-muted-foreground uppercase tracking-wider", children: "Unlock Requirement" })
+                  ] }),
+                  /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[11px] text-foreground font-medium leading-relaxed", children: details == null ? void 0 : details.unlockRequirement })
+                ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-2", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider", children: "Progress to Unlock" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  "span",
+                  {
+                    className: "text-[10px] font-bold",
+                    style: { color: "oklch(var(--primary))" },
+                    children: [
+                      lockedProgress,
+                      "%"
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "h-2.5 rounded-full overflow-hidden",
+                  style: { backgroundColor: "oklch(var(--muted))" },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      className: "h-full rounded-full transition-smooth",
+                      style: {
+                        width: `${lockedProgress}%`,
+                        background: "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)",
+                        boxShadow: "0 0 8px oklch(var(--primary) / 0.4)"
+                      }
+                    }
+                  )
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "p",
+                {
+                  className: "text-[10px] font-semibold text-center",
+                  style: { color: "oklch(var(--primary))" },
+                  children: [
+                    100 - lockedProgress,
+                    "% more to unlock this badge"
+                  ]
+                }
+              )
+            ] })
+          ] })
+        ) })
+      ]
+    }
+  ) });
+}
+function MilestonesPage() {
+  const { profiles, goals } = mockData;
+  const [activeProfileId, setActiveProfileId] = reactExports.useState(
+    mockData.selectedProfileId
+  );
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = reactExports.useState(
+    null
+  );
+  const activeProfile = profiles.find((p) => p.id === activeProfileId) ?? profiles[0];
+  const doneCount = roadmapNodes.filter((n) => n.status === "done").length;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col gap-5", "data-ocid": "milestones.page", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-1", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-xl font-bold text-foreground", children: "Identity & Milestones" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-0.5", children: "Your financial journey" })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx(
+      "div",
+      {
+        "data-ocid": "milestones.profile_hero.card",
+        className: "glow-inner rounded-[24px] overflow-hidden",
+        style: {
+          background: "linear-gradient(145deg, oklch(var(--primary) / 0.18) 0%, oklch(var(--accent) / 0.08) 100%)",
+          border: "1.5px solid oklch(var(--accent) / 0.35)",
+          boxShadow: "0 0 32px oklch(var(--accent) / 0.2), 0 8px 24px oklch(var(--primary) / 0.15), inset 0 1px 2px rgba(255,255,255,0.12)"
+        },
+        children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-5 flex flex-col gap-5", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-4", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "relative flex-shrink-0",
+                style: { width: "72px", height: "72px" },
+                children: activeProfile.id === "profile-1" ? /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "img",
+                  {
+                    src: "/assets/generated/architect-badge.dim_400x400.png",
+                    alt: "The Architect profile badge",
+                    className: "w-full h-full rounded-2xl object-cover",
+                    style: {
+                      boxShadow: "0 0 20px oklch(var(--accent) / 0.5), 0 0 40px oklch(var(--accent) / 0.2)",
+                      border: "2px solid oklch(var(--accent) / 0.5)"
+                    }
+                  }
+                ) : /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "div",
+                  {
+                    className: "w-full h-full rounded-2xl flex items-center justify-center text-4xl",
+                    style: {
+                      background: "linear-gradient(135deg, oklch(var(--primary) / 0.25) 0%, oklch(var(--accent) / 0.15) 100%)",
+                      border: "2px solid oklch(var(--accent) / 0.4)",
+                      boxShadow: "0 0 20px oklch(var(--accent) / 0.35)"
+                    },
+                    children: activeProfile.icon
+                  }
+                )
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex-1 min-w-0", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xl font-bold leading-tight text-foreground", children: activeProfile.name }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "span",
+                  {
+                    className: "text-[9px] font-bold px-2 py-0.5 rounded-full flex-shrink-0",
+                    style: {
+                      background: "oklch(var(--accent) / 0.15)",
+                      color: "oklch(var(--accent))",
+                      border: "1px solid oklch(var(--accent) / 0.3)",
+                      boxShadow: "0 0 8px oklch(var(--accent) / 0.2)"
+                    },
+                    children: "● Active"
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-medium text-muted-foreground mt-1 leading-snug", children: activeProfile.tagline }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] text-muted-foreground mt-1.5 line-clamp-2 leading-relaxed", children: activeProfile.description })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { "data-ocid": "milestones.profile_selector", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-2.5", children: "Choose your identity" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "div",
+              {
+                className: "flex gap-2 overflow-x-auto pb-1",
+                style: { scrollbarWidth: "none" },
+                children: profiles.map((profile, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  ProfileChip,
+                  {
+                    profile,
+                    isActive: profile.id === activeProfileId,
+                    onClick: () => setActiveProfileId(profile.id),
+                    index: i
+                  },
+                  profile.id
+                ))
+              }
+            )
+          ] })
+        ] })
+      }
+    ),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "milestones.roadmap_section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3 px-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold text-foreground", children: "Your Journey" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "span",
+          {
+            className: "text-xs font-bold px-2 py-0.5 rounded-full",
+            style: {
+              color: "oklch(var(--accent))",
+              backgroundColor: "oklch(var(--accent) / 0.1)",
+              border: "1px solid oklch(var(--accent) / 0.25)"
+            },
+            children: [
+              doneCount,
+              "/",
+              roadmapNodes.length,
+              " completed"
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "glass-card glow-inner p-5", children: roadmapNodes.map((node, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+        RoadmapNode,
+        {
+          node,
+          index: i,
+          isLast: i === roadmapNodes.length - 1
+        },
+        node.label
+      )) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "milestones.goals_section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3 px-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold text-foreground", children: "Long-term Goals" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground", children: [
+          goals.length,
+          " active"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col gap-3", children: goals.map((goal, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(GoalCard, { goal, index: i }, goal.id)) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { "data-ocid": "milestones.badges_section", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-3 px-1", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "text-sm font-bold text-foreground", children: "Achievements" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "span",
+          {
+            className: "text-xs font-semibold",
+            style: { color: "oklch(var(--accent))" },
+            children: [
+              achievementBadges.filter((b) => b.unlocked).length,
+              "/",
+              achievementBadges.length,
+              " unlocked"
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-3 gap-3", children: [
+        selectedBadgeIndex !== null && /* @__PURE__ */ jsxRuntimeExports.jsx(
+          BadgeDialog,
+          {
+            badge: achievementBadges[selectedBadgeIndex],
+            badgeIndex: selectedBadgeIndex,
+            open: selectedBadgeIndex !== null,
+            onClose: () => setSelectedBadgeIndex(null)
+          }
+        ),
+        achievementBadges.map((badge, i) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "button",
+          {
+            type: "button",
+            "data-ocid": `milestones.badge.item.${i + 1}`,
+            onClick: () => setSelectedBadgeIndex(i),
+            className: "relative flex flex-col items-center gap-2 p-4 rounded-[20px] text-center overflow-hidden transition-smooth hover:scale-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2",
+            style: {
+              WebkitTapHighlightColor: "transparent",
+              background: badge.unlocked ? badge.gradient : "oklch(var(--muted) / 0.5)",
+              border: badge.unlocked ? "1.5px solid rgba(255,255,255,0.15)" : "1.5px solid oklch(var(--border) / 0.5)",
+              boxShadow: badge.unlocked ? "0 4px 16px rgba(0,0,0,0.25), inset 0 1px 2px rgba(255,255,255,0.2)" : "none",
+              opacity: badge.unlocked ? 1 : 0.55,
+              filter: badge.unlocked ? "none" : "grayscale(1)"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "w-12 h-12 rounded-full flex items-center justify-center text-2xl",
+                  style: {
+                    background: badge.unlocked ? "rgba(255,255,255,0.15)" : "oklch(var(--muted))",
+                    boxShadow: badge.unlocked ? "0 0 12px rgba(255,255,255,0.2)" : "none"
+                  },
+                  children: badge.icon
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0 w-full", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "p",
+                  {
+                    className: "text-[10px] font-bold leading-tight",
+                    style: {
+                      color: badge.unlocked ? "rgba(255,255,255,0.95)" : "oklch(var(--muted-foreground))"
+                    },
+                    children: badge.label
+                  }
+                ),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "p",
+                  {
+                    className: "text-[9px] mt-0.5",
+                    style: {
+                      color: badge.unlocked ? "rgba(255,255,255,0.6)" : "oklch(var(--muted-foreground))"
+                    },
+                    children: badge.sublabel
+                  }
+                )
+              ] }),
+              !badge.unlocked && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "absolute inset-0 flex items-start justify-end p-2 rounded-[20px]",
+                  style: { pointerEvents: "none" },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      className: "w-5 h-5 rounded-full flex items-center justify-center",
+                      style: {
+                        backgroundColor: "oklch(var(--border))",
+                        border: "1px solid oklch(var(--muted-foreground) / 0.4)"
+                      },
+                      children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        Lock,
+                        {
+                          size: 10,
+                          style: { color: "oklch(var(--muted-foreground))" }
+                        }
+                      )
+                    }
+                  )
+                }
+              )
+            ]
+          },
+          badge.label
+        ))
+      ] })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-4" })
+  ] });
+}
+export {
+  MilestonesPage as default
+};

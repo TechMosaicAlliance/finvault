@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/OverviewPage-CjsZrHFq.js","assets/label-CrnIurBM.js","assets/clsx-Cx-b8D_3.js","assets/zap-EahPen9b.js","assets/AnalyticsPage-D9dNWQXP.js","assets/AccountsPage-CZnsExfP.js","assets/MilestonesPage-BNFwnCzJ.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/OverviewPage-B_sesa_1.js","assets/label-Ca6V_-W2.js","assets/index-CNbxDuKD.js","assets/utils-BIDdo8o-.js","assets/clsx-DgYk2OaC.js","assets/dialog-CvVhU-05.js","assets/x-DXakP6Jx.js","assets/input-BtqKTnWN.js","assets/badge-Cn0Q6EId.js","assets/mockData-CWBf041B.js","assets/zap-BLjbhaOG.js","assets/trending-up-Dm-FwHMO.js","assets/AnalyticsPage-CcwyNbhE.js","assets/AccountsPage-Dl3xZgsj.js","assets/arrow-left-BN8YZalY.js","assets/MilestonesPage-CGmgCGjC.js","assets/TransactionsPage-DjorR5Vv.js","assets/SettingsPage-BfXvJp-l.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -4947,9 +4947,9 @@ var QueryClient = (_i = class {
     });
   }
   getQueryDefaults(queryKey) {
-    const defaults = [...__privateGet(this, _queryDefaults).values()];
+    const defaults2 = [...__privateGet(this, _queryDefaults).values()];
     const result = {};
-    defaults.forEach((queryDefault) => {
+    defaults2.forEach((queryDefault) => {
       if (partialMatchKey(queryKey, queryDefault.queryKey)) {
         Object.assign(result, queryDefault.defaultOptions);
       }
@@ -4963,9 +4963,9 @@ var QueryClient = (_i = class {
     });
   }
   getMutationDefaults(mutationKey) {
-    const defaults = [...__privateGet(this, _mutationDefaults).values()];
+    const defaults2 = [...__privateGet(this, _mutationDefaults).values()];
     const result = {};
-    defaults.forEach((queryDefault) => {
+    defaults2.forEach((queryDefault) => {
       if (partialMatchKey(mutationKey, queryDefault.mutationKey)) {
         Object.assign(result, queryDefault.defaultOptions);
       }
@@ -18491,267 +18491,6 @@ const __vitePreload = function preload2(baseModule, deps, importerUrl) {
     return baseModule().catch(handlePreloadError);
   });
 };
-const mockData = {
-  accounts: [
-    {
-      id: "acct-1",
-      bankName: "GTBank",
-      lastFour: "4821",
-      balance: 142500,
-      color: "#F95738",
-      inflows: 125e3,
-      outflows: 82e3
-    },
-    {
-      id: "acct-2",
-      bankName: "Access Bank",
-      lastFour: "7734",
-      balance: 87200,
-      color: "#E63946",
-      inflows: 35e3,
-      outflows: 48e3
-    },
-    {
-      id: "acct-3",
-      bankName: "Zenith Bank",
-      lastFour: "2209",
-      balance: 234800,
-      color: "#7B2D8B",
-      inflows: 0,
-      outflows: 25e3
-    }
-  ],
-  transactions: [
-    {
-      id: "tx-1",
-      description: "Salary Deposit — Andela NG",
-      amount: 125e3,
-      category: "Income",
-      date: "2026-05-01",
-      isAutoParsed: true,
-      transactionType: "credit",
-      icon: "💰"
-    },
-    {
-      id: "tx-2",
-      description: "Rent Payment — Lekki Phase 1",
-      amount: 45e3,
-      category: "Housing",
-      date: "2026-05-02",
-      isAutoParsed: false,
-      transactionType: "debit",
-      icon: "🏠"
-    },
-    {
-      id: "tx-3",
-      description: "Shoprite — Groceries",
-      amount: 12400,
-      category: "Feeding",
-      date: "2026-05-03",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "🛒"
-    },
-    {
-      id: "tx-4",
-      description: "Uber Rides — Weekly",
-      amount: 8500,
-      category: "Transportation",
-      date: "2026-05-04",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "🚗"
-    },
-    {
-      id: "tx-5",
-      description: "Side Hustle — Freelance Design",
-      amount: 35e3,
-      category: "Income",
-      date: "2026-05-05",
-      isAutoParsed: false,
-      transactionType: "credit",
-      icon: "💼"
-    },
-    {
-      id: "tx-6",
-      description: "Barbing & Grooming — Cuts HQ",
-      amount: 5e3,
-      category: "Grooming",
-      date: "2026-05-06",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "✂️"
-    },
-    {
-      id: "tx-7",
-      description: "KFC Victoria Island",
-      amount: 7800,
-      category: "Feeding",
-      date: "2026-05-07",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "🍗"
-    },
-    {
-      id: "tx-8",
-      description: "Birthday Gift — Chioma",
-      amount: 12e3,
-      category: "Gifts",
-      date: "2026-05-08",
-      isAutoParsed: false,
-      transactionType: "debit",
-      icon: "🎁"
-    },
-    {
-      id: "tx-9",
-      description: "BRT Card Top-Up",
-      amount: 5e3,
-      category: "Transportation",
-      date: "2026-05-09",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "🚌"
-    },
-    {
-      id: "tx-10",
-      description: "Savings Transfer — Piggyvest",
-      amount: 5e4,
-      category: "Savings",
-      date: "2026-05-10",
-      isAutoParsed: false,
-      transactionType: "debit",
-      icon: "🐷"
-    },
-    {
-      id: "tx-11",
-      description: "MTN Airtime — SMS Alert",
-      amount: 2e3,
-      category: "Utilities",
-      date: "2026-05-11",
-      isAutoParsed: true,
-      transactionType: "debit",
-      icon: "📱"
-    },
-    {
-      id: "tx-12",
-      description: "Investment — ARM Savings",
-      amount: 25e3,
-      category: "Investment",
-      date: "2026-05-12",
-      isAutoParsed: false,
-      transactionType: "debit",
-      icon: "📈"
-    }
-  ],
-  expenseCategories: [
-    {
-      name: "Grooming",
-      amount: 15e3,
-      color: "#7B2D8B",
-      budgeted: 1e4,
-      isOverBudget: true
-    },
-    {
-      name: "Feeding",
-      amount: 45e3,
-      color: "#2D6A4F",
-      budgeted: 4e4,
-      isOverBudget: true
-    },
-    {
-      name: "Transportation",
-      amount: 28e3,
-      color: "#1A2B4C",
-      budgeted: 3e4,
-      isOverBudget: false
-    },
-    {
-      name: "Gifts",
-      amount: 12e3,
-      color: "#F95738",
-      budgeted: 8e3,
-      isOverBudget: true
-    }
-  ],
-  goals: [
-    {
-      id: "goal-1",
-      name: "Land Purchase",
-      targetAmount: 5e6,
-      currentAmount: 335e4,
-      progressPercent: 67,
-      icon: "🏡",
-      targetDate: "Dec 2027"
-    },
-    {
-      id: "goal-2",
-      name: "Master's Degree Fund",
-      targetAmount: 25e5,
-      currentAmount: 85e4,
-      progressPercent: 34,
-      icon: "🎓",
-      targetDate: "Sep 2026"
-    }
-  ],
-  profiles: [
-    {
-      id: "profile-1",
-      name: "The Architect",
-      tagline: "Building wealth, one plan at a time",
-      icon: "🏛️",
-      description: "Strategic, long-term thinker. Prioritizes structured goals and disciplined saving."
-    },
-    {
-      id: "profile-2",
-      name: "The Builder",
-      tagline: "Growing steadily, brick by brick",
-      icon: "🔨",
-      description: "Consistent, reliable. Focuses on steady income growth and asset accumulation."
-    },
-    {
-      id: "profile-3",
-      name: "The Investor",
-      tagline: "Money working harder than you",
-      icon: "📊",
-      description: "Risk-aware, growth-oriented. Maximizes returns through diversified investments."
-    },
-    {
-      id: "profile-4",
-      name: "The Explorer",
-      tagline: "Adventures funded by freedom",
-      icon: "🌍",
-      description: "Flexible, experience-driven. Balances lifestyle spending with financial health."
-    },
-    {
-      id: "profile-5",
-      name: "The Guardian",
-      tagline: "Protecting what matters most",
-      icon: "🛡️",
-      description: "Security-focused. Prioritizes emergency funds, insurance, and family protection."
-    }
-  ],
-  selectedProfileId: "profile-1",
-  cashflowInflows: [
-    { name: "Salary", amount: 125e3, icon: "💼" },
-    { name: "Side Hustle", amount: 35e3, icon: "🎯" }
-  ],
-  cashflowOutflows: [
-    { name: "Rent", amount: 45e3, icon: "🏠" },
-    { name: "Savings", amount: 5e4, icon: "🐷" },
-    { name: "Food", amount: 45e3, icon: "🍽️" },
-    { name: "Transport", amount: 28e3, icon: "🚗" }
-  ],
-  totalSavings: 464500,
-  avgMonthlyExpenses: 1e5,
-  burnRate: 4.64,
-  safeToSpend: 12400,
-  startingBalance: 685400,
-  currentBalance: 464500,
-  safeToSpendPercent: 70
-};
-function formatNaira(amount) {
-  return `₦${amount.toLocaleString("en-NG")}`;
-}
 var prefix = "Invariant failed";
 function invariant(condition, message) {
   if (condition) {
@@ -24070,13 +23809,52 @@ const createLucideIcon = (iconName, iconNode) => {
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$3 = [
+const __iconNode$6 = [
   ["path", { d: "M3 3v16a2 2 0 0 0 2 2h16", key: "c24i48" }],
   ["path", { d: "M18 17V9", key: "2bz60n" }],
   ["path", { d: "M13 17V5", key: "1frdt8" }],
   ["path", { d: "M8 17v-3", key: "17ska0" }]
 ];
-const ChartColumn = createLucideIcon("chart-column", __iconNode$3);
+const ChartColumn = createLucideIcon("chart-column", __iconNode$6);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$5 = [
+  ["rect", { width: "20", height: "14", x: "2", y: "5", rx: "2", key: "ynyp8z" }],
+  ["line", { x1: "2", x2: "22", y1: "10", y2: "10", key: "1b3vmo" }]
+];
+const CreditCard = createLucideIcon("credit-card", __iconNode$5);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$4 = [
+  ["rect", { width: "7", height: "9", x: "3", y: "3", rx: "1", key: "10lvy0" }],
+  ["rect", { width: "7", height: "5", x: "14", y: "3", rx: "1", key: "16une8" }],
+  ["rect", { width: "7", height: "9", x: "14", y: "12", rx: "1", key: "1hutg5" }],
+  ["rect", { width: "7", height: "5", x: "3", y: "16", rx: "1", key: "ldoo1y" }]
+];
+const LayoutDashboard = createLucideIcon("layout-dashboard", __iconNode$4);
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$3 = [
+  [
+    "path",
+    { d: "M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z", key: "q3az6g" }
+  ],
+  ["path", { d: "M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8", key: "1h4pet" }],
+  ["path", { d: "M12 17.5v-11", key: "1jc1ny" }]
+];
+const Receipt = createLucideIcon("receipt", __iconNode$3);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -24084,10 +23862,10 @@ const ChartColumn = createLucideIcon("chart-column", __iconNode$3);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$2 = [
-  ["rect", { width: "20", height: "14", x: "2", y: "5", rx: "2", key: "ynyp8z" }],
-  ["line", { x1: "2", x2: "22", y1: "10", y2: "10", key: "1b3vmo" }]
+  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
+  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
 ];
-const CreditCard = createLucideIcon("credit-card", __iconNode$2);
+const Search = createLucideIcon("search", __iconNode$2);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -24095,12 +23873,16 @@ const CreditCard = createLucideIcon("credit-card", __iconNode$2);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$1 = [
-  ["rect", { width: "7", height: "9", x: "3", y: "3", rx: "1", key: "10lvy0" }],
-  ["rect", { width: "7", height: "5", x: "14", y: "3", rx: "1", key: "16une8" }],
-  ["rect", { width: "7", height: "9", x: "14", y: "12", rx: "1", key: "1hutg5" }],
-  ["rect", { width: "7", height: "5", x: "3", y: "16", rx: "1", key: "ldoo1y" }]
+  [
+    "path",
+    {
+      d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z",
+      key: "1qme2f"
+    }
+  ],
+  ["circle", { cx: "12", cy: "12", r: "3", key: "1v7zrd" }]
 ];
-const LayoutDashboard = createLucideIcon("layout-dashboard", __iconNode$1);
+const Settings = createLucideIcon("settings", __iconNode$1);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -24115,6 +23897,12 @@ const User = createLucideIcon("user", __iconNode);
 const navItems = [
   { to: "/", label: "Overview", icon: LayoutDashboard, ocid: "nav.overview" },
   {
+    to: "/transactions",
+    label: "Transactions",
+    icon: Receipt,
+    ocid: "nav.transactions"
+  },
+  {
     to: "/analytics",
     label: "Analytics",
     icon: ChartColumn,
@@ -24128,80 +23916,222 @@ const navItems = [
   },
   { to: "/milestones", label: "Identity", icon: User, ocid: "nav.identity" }
 ];
+function getAvatarGlow(burnRate) {
+  {
+    return {
+      borderColor: "oklch(0.65 0.2 142)",
+      boxShadow: "0 0 0 2px oklch(0.65 0.2 142), 0 0 10px 3px oklch(0.65 0.2 142 / 0.45), 0 0 20px 6px oklch(0.65 0.2 142 / 0.2)"
+    };
+  }
+}
 function Layout({ children }) {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
-  const isAlert = mockData.burnRate < 1;
+  const navigate = useNavigate();
+  const avatarGlow = getAvatarGlow();
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
       className: `min-h-screen flex justify-center ${"theme-calm"}`,
       style: { backgroundColor: "oklch(var(--background))" },
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-[430px] min-h-screen flex flex-col relative", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "sticky top-0 z-40 flex items-center justify-between px-5 py-4 bg-card/80 backdrop-blur-md border-b border-border/50", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("header", { className: "sticky top-0 z-40 flex items-center justify-between px-5 py-3.5 bg-card/80 backdrop-blur-md border-b border-border/50", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2.5", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-8 h-8 rounded-xl bg-primary flex items-center justify-center shadow-md", children: /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-primary-foreground text-sm font-bold", children: "F" }) }),
             /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-foreground font-display font-bold text-lg tracking-tight", children: "FinVault" })
           ] }),
-          isAlert,
-          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-accent bg-accent/10 border border-accent/30 px-2.5 py-1 rounded-full", children: "✓ Healthy" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 overflow-y-auto pb-24 px-4 pt-4", children }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-card/90 backdrop-blur-xl border-t border-border/50 px-2 pb-safe", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-end justify-around py-2", children: navItems.map((item) => {
-          const isActive = item.to === "/" ? currentPath === "/" : currentPath.startsWith(item.to);
-          const Icon2 = item.icon;
-          return /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            Link,
-            {
-              to: item.to,
-              "data-ocid": item.ocid,
-              className: "flex flex-col items-center gap-1 min-w-[60px] py-1 px-2 relative transition-smooth",
-              children: [
-                isActive && /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "span",
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                "data-ocid": "header.search_button",
+                onClick: () => {
+                },
+                className: "p-2 rounded-full text-muted-foreground hover:text-foreground transition-colors duration-200 hover:bg-muted/40",
+                "aria-label": "Search",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 20, strokeWidth: 1.8 })
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                "data-ocid": "header.settings_button",
+                onClick: () => navigate({ to: "/settings" }),
+                className: "p-2 rounded-full transition-colors duration-200",
+                style: {
+                  color: currentPath === "/settings" ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))",
+                  background: currentPath === "/settings" ? "oklch(var(--accent) / 0.12)" : "transparent"
+                },
+                "aria-label": "Settings",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  Settings,
                   {
-                    className: "absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full",
+                    size: 20,
+                    strokeWidth: 1.8,
                     style: {
-                      backgroundColor: "oklch(var(--accent))",
-                      boxShadow: "0 0 8px 2px oklch(var(--accent) / 0.6)"
+                      filter: currentPath === "/settings" ? "drop-shadow(0 0 5px oklch(var(--accent) / 0.5))" : "none"
                     }
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  Icon2,
-                  {
-                    size: 22,
-                    strokeWidth: isActive ? 2.5 : 1.8,
-                    className: "transition-smooth",
-                    style: {
-                      color: isActive ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))",
-                      filter: isActive ? "drop-shadow(0 0 6px oklch(var(--accent) / 0.5))" : "none"
-                    }
-                  }
-                ),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(
-                  "span",
-                  {
-                    className: "text-[10px] font-semibold transition-smooth",
-                    style: {
-                      color: isActive ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))"
-                    },
-                    children: item.label
                   }
                 )
-              ]
+              }
+            ),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                "data-ocid": "header.identity_button",
+                onClick: () => navigate({ to: "/milestones" }),
+                className: "w-9 h-9 rounded-full flex items-center justify-center ml-1 transition-all duration-300",
+                style: {
+                  background: "oklch(var(--card))",
+                  border: `2px solid ${avatarGlow.borderColor}`,
+                  boxShadow: avatarGlow.boxShadow
+                },
+                "aria-label": "Identity & Health",
+                children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  User,
+                  {
+                    size: 18,
+                    strokeWidth: 2,
+                    style: { color: avatarGlow.borderColor }
+                  }
+                )
+              }
+            )
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1 overflow-y-auto pb-24 px-4 pt-4", children }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("nav", { className: "fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] z-50", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
+          {
+            className: "border-t border-border/50 px-2 pb-safe",
+            style: {
+              background: "oklch(var(--card) / 0.80)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)"
             },
-            item.to
-          );
-        }) }) }) })
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-end justify-around py-2", children: navItems.map((item) => {
+              const isActive = item.to === "/" ? currentPath === "/" : currentPath.startsWith(item.to);
+              const Icon2 = item.icon;
+              return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                Link,
+                {
+                  to: item.to,
+                  "data-ocid": item.ocid,
+                  className: "flex flex-col items-center gap-1 min-w-[48px] py-1 px-2 relative transition-smooth",
+                  children: [
+                    isActive && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "span",
+                      {
+                        className: "absolute -top-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full",
+                        style: {
+                          backgroundColor: "oklch(var(--accent))",
+                          boxShadow: "0 0 8px 2px oklch(var(--accent) / 0.6)"
+                        }
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      Icon2,
+                      {
+                        size: 22,
+                        strokeWidth: isActive ? 2.5 : 1.8,
+                        className: "transition-smooth",
+                        style: {
+                          color: isActive ? "oklch(var(--accent))" : "oklch(var(--muted-foreground))",
+                          filter: isActive ? "drop-shadow(0 0 6px oklch(var(--accent) / 0.5))" : "none"
+                        }
+                      }
+                    ),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(
+                      "span",
+                      {
+                        className: "text-[11px] font-bold transition-smooth",
+                        style: {
+                          color: isActive ? "oklch(var(--accent))" : "oklch(var(--foreground) / 0.65)",
+                          letterSpacing: "0.01em"
+                        },
+                        children: item.label
+                      }
+                    )
+                  ]
+                },
+                item.to
+              );
+            }) })
+          }
+        ) })
       ] })
     }
   );
 }
-const OverviewPage = reactExports.lazy(() => __vitePreload(() => import("./OverviewPage-CjsZrHFq.js"), true ? __vite__mapDeps([0,1,2,3]) : void 0));
-const AnalyticsPage = reactExports.lazy(() => __vitePreload(() => import("./AnalyticsPage-D9dNWQXP.js"), true ? __vite__mapDeps([4,2]) : void 0));
-const AccountsPage = reactExports.lazy(() => __vitePreload(() => import("./AccountsPage-CZnsExfP.js"), true ? __vite__mapDeps([5,1,2]) : void 0));
-const MilestonesPage = reactExports.lazy(() => __vitePreload(() => import("./MilestonesPage-BNFwnCzJ.js"), true ? __vite__mapDeps([6,3]) : void 0));
+const SettingsContext = reactExports.createContext(null);
+const STORAGE_KEY = "finvault-settings";
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...defaults, ...JSON.parse(raw) };
+  } catch {
+  }
+  return defaults;
+}
+const defaults = {
+  language: "en",
+  theme: "light",
+  viewStyle: "glassmorphic",
+  dateFormat: "DD-MM-YY",
+  mainCurrency: "NGN",
+  subCurrency: "USD",
+  exchangeRate: 1
+};
+function SettingsProvider({ children }) {
+  const [state, setState] = reactExports.useState(loadSettings);
+  reactExports.useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }, [state]);
+  reactExports.useEffect(() => {
+    const root2 = document.documentElement;
+    if (state.theme === "dark") {
+      root2.classList.add("dark");
+    } else {
+      root2.classList.remove("dark");
+    }
+  }, [state.theme]);
+  reactExports.useEffect(() => {
+    document.documentElement.dataset.viewStyle = state.viewStyle;
+  }, [state.viewStyle]);
+  function set(key, value) {
+    setState((prev) => ({ ...prev, [key]: value }));
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(
+    SettingsContext.Provider,
+    {
+      value: {
+        ...state,
+        setLanguage: (v) => set("language", v),
+        setTheme: (v) => set("theme", v),
+        setViewStyle: (v) => set("viewStyle", v),
+        setDateFormat: (v) => set("dateFormat", v),
+        setMainCurrency: (v) => set("mainCurrency", v),
+        setSubCurrency: (v) => set("subCurrency", v),
+        setExchangeRate: (v) => set("exchangeRate", v)
+      },
+      children
+    }
+  );
+}
+function useSettings() {
+  const ctx = reactExports.useContext(SettingsContext);
+  if (!ctx) throw new Error("useSettings must be used within SettingsProvider");
+  return ctx;
+}
+const OverviewPage = reactExports.lazy(() => __vitePreload(() => import("./OverviewPage-B_sesa_1.js"), true ? __vite__mapDeps([0,1,2,3,4,5,6,7,8,9,10,11]) : void 0));
+const AnalyticsPage = reactExports.lazy(() => __vitePreload(() => import("./AnalyticsPage-CcwyNbhE.js"), true ? __vite__mapDeps([12,9,11,4]) : void 0));
+const AccountsPage = reactExports.lazy(() => __vitePreload(() => import("./AccountsPage-Dl3xZgsj.js"), true ? __vite__mapDeps([13,1,2,3,4,7,9,11,14,6]) : void 0));
+const MilestonesPage = reactExports.lazy(() => __vitePreload(() => import("./MilestonesPage-CGmgCGjC.js"), true ? __vite__mapDeps([15,5,3,4,6,9,10]) : void 0));
+const TransactionsPage = reactExports.lazy(() => __vitePreload(() => import("./TransactionsPage-DjorR5Vv.js"), true ? __vite__mapDeps([16,8,2,3,4,9,10]) : void 0));
+const SettingsPage = reactExports.lazy(() => __vitePreload(() => import("./SettingsPage-BfXvJp-l.js"), true ? __vite__mapDeps([17,8,2,3,4,7,14]) : void 0));
 function AppShell() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "theme-calm", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     reactExports.Suspense,
@@ -24238,15 +24168,27 @@ const milestonesRoute = createRoute({
   path: "/milestones",
   component: MilestonesPage
 });
+const transactionsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/transactions",
+  component: TransactionsPage
+});
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/settings",
+  component: SettingsPage
+});
 const routeTree = rootRoute.addChildren([
   overviewRoute,
+  transactionsRoute,
   analyticsRoute,
   accountsRoute,
-  milestonesRoute
+  milestonesRoute,
+  settingsRoute
 ]);
 const router = createRouter({ routeTree });
 function App() {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider, { router });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx(SettingsProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider, { router }) });
 }
 BigInt.prototype.toJSON = function() {
   return this.toString();
@@ -24257,16 +24199,17 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 export {
   CreditCard as C,
-  React$5 as R,
+  Link as L,
+  React$4 as R,
   reactDomExports as a,
-  ReactDOM$2 as b,
+  commonjsGlobal as b,
   createLucideIcon as c,
-  commonjsGlobal as d,
-  React$4 as e,
-  formatNaira as f,
+  React$5 as d,
+  ReactDOM$2 as e,
+  useNavigate as f,
   getDefaultExportFromCjs as g,
   invariant as i,
   jsxRuntimeExports as j,
-  mockData as m,
-  reactExports as r
+  reactExports as r,
+  useSettings as u
 };

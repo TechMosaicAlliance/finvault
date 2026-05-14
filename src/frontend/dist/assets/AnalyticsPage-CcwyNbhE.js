@@ -1,5 +1,24 @@
-import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports, d as commonjsGlobal, g as getDefaultExportFromCjs, e as React, i as invariant$1, m as mockData, f as formatNaira } from "./index-DPcbY0g3.js";
-import { c as clsx, T as TrendingUp, a as TrendingDown } from "./clsx-Cx-b8D_3.js";
+import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports, b as commonjsGlobal, g as getDefaultExportFromCjs, R as React, i as invariant$1 } from "./index-BioT_-jz.js";
+import { m as mockData, f as formatNaira } from "./mockData-CWBf041B.js";
+import { T as TrendingUp, a as TrendingDown } from "./trending-up-Dm-FwHMO.js";
+import { c as clsx } from "./clsx-DgYk2OaC.js";
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$2 = [
+  [
+    "path",
+    {
+      d: "M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z",
+      key: "pzmjnu"
+    }
+  ],
+  ["path", { d: "M21.21 15.89A10 10 0 1 1 8 2.83", key: "k2fpak" }]
+];
+const ChartPie = createLucideIcon("chart-pie", __iconNode$2);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -28303,6 +28322,17 @@ const CATEGORY_COLORS = {
   Transportation: "#1A2B4C",
   Gifts: "#F59E0B"
 };
+const INCOME_COLORS = {
+  Salary: "#2D6A4F",
+  "Side Hustle": "#1A7B5A"
+};
+const BUDGET_TARGETS = {
+  Grooming: 10,
+  Feeding: 40,
+  Transportation: 25,
+  Gifts: 10,
+  Other: 15
+};
 function BurnRateBar({ value, max: max2 = 12 }) {
   const pct = Math.min(value / max2 * 100, 100);
   const color2 = value < 1 ? "#C0392B" : value < 3 ? "#F59E0B" : "#2D6A4F";
@@ -28430,9 +28460,74 @@ function CategoryRow({
     }
   );
 }
-function DonutCenterOverlay({ ratio }) {
+function renderPieLabel(props) {
+  const { cx, cy, midAngle, outerRadius, name, percent: percent2 } = props;
+  const cxNum = Number(cx ?? 0);
+  const cyNum = Number(cy ?? 0);
+  const outerNum = Number(outerRadius ?? 130);
+  const RADIAN2 = Math.PI / 180;
+  const radius = outerNum + 22;
+  const x2 = cxNum + radius * Math.cos(-midAngle * RADIAN2);
+  const y2 = cyNum + radius * Math.sin(-midAngle * RADIAN2);
+  const pct = ((percent2 ?? 0) * 100).toFixed(0);
+  if ((percent2 ?? 0) < 0.06) return null;
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    "text",
+    {
+      x: x2,
+      y: y2,
+      textAnchor: x2 > cxNum ? "start" : "end",
+      dominantBaseline: "central",
+      style: { fontSize: 10, fontWeight: 600, fill: "oklch(0.72 0.04 265)" },
+      children: [
+        name,
+        " ",
+        pct,
+        "%"
+      ]
+    }
+  );
+}
+function DonutCenterOverlay({
+  ratio,
+  chartView
+}) {
   const isHealthy = ratio >= 0.25;
   const pct = (ratio * 100).toFixed(0);
+  const { cashflowInflows } = mockData;
+  const totalIncome = cashflowInflows.reduce((s2, i) => s2 + i.amount, 0);
+  if (chartView === "income") {
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 flex items-center justify-center pointer-events-none", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        style: {
+          backdropFilter: "blur(12px)",
+          background: "oklch(var(--card) / 0.6)",
+          border: "1px solid oklch(var(--border) / 0.6)",
+          borderRadius: "50%",
+          width: 110,
+          height: 110,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "inset 0 1px 3px rgba(255,255,255,0.2)"
+        },
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-semibold text-muted-foreground leading-tight text-center mb-0.5", children: "Total" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(
+            "span",
+            {
+              className: "text-base font-black leading-none",
+              style: { color: "#2D6A4F" },
+              children: formatNaira(totalIncome)
+            }
+          ),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[9px] font-semibold text-muted-foreground mt-0.5 leading-tight text-center", children: "Income" })
+        ]
+      }
+    ) });
+  }
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 flex items-center justify-center pointer-events-none", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -28606,7 +28701,173 @@ function IncomeView() {
     }
   );
 }
+function BudgetPlannerSection() {
+  const { expenseCategories } = mockData;
+  const totalBudget = expenseCategories.reduce((s2, c2) => s2 + c2.budgeted, 0);
+  const totalSpent = expenseCategories.reduce((s2, c2) => s2 + c2.amount, 0);
+  const unallocated = Math.max(totalBudget - totalSpent, 0);
+  function getBudgetBarColor(pct) {
+    if (pct > 70) return "oklch(0.60 0.25 25)";
+    if (pct > 50) return "oklch(0.70 0.18 45)";
+    if (pct > 20) return "oklch(var(--muted-foreground))";
+    return "oklch(0.65 0.15 142)";
+  }
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+    motion.section,
+    {
+      "data-ocid": "analytics.budget_planner_section",
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      transition: { duration: 0.4, delay: 0.1 },
+      children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex items-center gap-2 mb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wider", children: "Budget Planner" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: "glass-card glow-inner p-4",
+            style: {
+              borderColor: "oklch(var(--border) / 0.5)",
+              boxShadow: "inset 0 1px 2px rgba(255,255,255,0.06)"
+            },
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col gap-4", children: expenseCategories.map((cat, i) => {
+                const targetPct = BUDGET_TARGETS[cat.name] ?? BUDGET_TARGETS.Other;
+                const targetAmount = Math.round(targetPct / 100 * totalBudget);
+                const spentPct = Math.min(cat.amount / targetAmount * 100, 100);
+                const barColor = getBudgetBarColor(spentPct);
+                const dotColor = CATEGORY_COLORS[cat.name] ?? cat.color;
+                return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                  motion.div,
+                  {
+                    "data-ocid": `analytics.budget.item.${i + 1}`,
+                    initial: { opacity: 0, x: -10 },
+                    animate: { opacity: 1, x: 0 },
+                    transition: { duration: 0.3, delay: 0.1 + i * 0.06 },
+                    children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-1.5", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "span",
+                            {
+                              className: "w-2.5 h-2.5 rounded-full flex-shrink-0",
+                              style: { backgroundColor: dotColor }
+                            }
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-semibold text-foreground", children: cat.name }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                            "span",
+                            {
+                              className: "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
+                              style: {
+                                background: `${barColor}22`,
+                                color: barColor
+                              },
+                              children: [
+                                targetPct,
+                                "% target"
+                              ]
+                            }
+                          )
+                        ] }),
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold text-foreground", children: formatNaira(cat.amount) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-muted-foreground", children: [
+                            " ",
+                            "/ ",
+                            formatNaira(targetAmount)
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "div",
+                        {
+                          className: "h-2 w-full rounded-full overflow-hidden",
+                          style: { backgroundColor: "oklch(var(--muted))" },
+                          children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            motion.div,
+                            {
+                              className: "h-full rounded-full",
+                              style: { backgroundColor: barColor },
+                              initial: { width: 0 },
+                              animate: { width: `${spentPct}%` },
+                              transition: {
+                                duration: 0.9,
+                                ease: "easeOut",
+                                delay: 0.2 + i * 0.07
+                              }
+                            }
+                          )
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-1", children: [
+                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-[10px] text-muted-foreground", children: [
+                          spentPct.toFixed(0),
+                          "% of target used"
+                        ] }),
+                        cat.isOverBudget && /* @__PURE__ */ jsxRuntimeExports.jsx(
+                          "span",
+                          {
+                            className: "text-[9px] font-bold px-1.5 py-0.5 rounded-full",
+                            style: {
+                              background: "rgba(249,115,22,0.15)",
+                              color: "#F97316"
+                            },
+                            children: "Over budget ⚠"
+                          }
+                        )
+                      ] })
+                    ]
+                  },
+                  cat.name
+                );
+              }) }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: "my-4 border-t",
+                  style: { borderColor: "oklch(var(--border) / 0.4)" }
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "div",
+                {
+                  className: "flex items-center justify-between rounded-2xl px-4 py-3",
+                  style: { background: "oklch(var(--accent) / 0.07)" },
+                  "data-ocid": "analytics.budget.unallocated",
+                  children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-muted-foreground", children: "Remaining Unallocated Budget" }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground mt-0.5", children: [
+                        "Total budget: ",
+                        formatNaira(totalBudget)
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-right", children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        "p",
+                        {
+                          className: "text-xl font-black",
+                          style: { color: unallocated > 0 ? "#2D6A4F" : "#C0392B" },
+                          children: formatNaira(unallocated)
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-[10px] text-muted-foreground", children: [
+                        (unallocated / totalBudget * 100).toFixed(0),
+                        "% free"
+                      ] })
+                    ] })
+                  ]
+                }
+              )
+            ]
+          }
+        )
+      ]
+    }
+  );
+}
 function ExpensesView({ savingsRatio }) {
+  const [chartView, setChartView] = reactExports.useState("expenses");
   const { expenseCategories, totalSavings, avgMonthlyExpenses, burnRate } = mockData;
   const burnAccentColor = "#2D6A4F";
   const burnBg = "oklch(var(--accent) / 0.08)";
@@ -28626,78 +28887,128 @@ function ExpensesView({ savingsRatio }) {
             className: "glass-card glow-inner p-4",
             "data-ocid": "analytics.donut_chart_card",
             children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4", children: "Expenditure Breakdown" }),
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", style: { height: 280 }, children: [
-                /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(PieChart, { children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Pie,
-                    {
-                      data: expenseCategories,
-                      cx: "50%",
-                      cy: "50%",
-                      innerRadius: 80,
-                      outerRadius: 130,
-                      paddingAngle: 3,
-                      dataKey: "amount",
-                      startAngle: 90,
-                      endAngle: -270,
-                      children: expenseCategories.map((entry) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-                        Cell,
-                        {
-                          fill: CATEGORY_COLORS[entry.name] ?? entry.color,
-                          stroke: "transparent",
-                          strokeWidth: 0
-                        },
-                        entry.name
-                      ))
-                    }
-                  ),
-                  /* @__PURE__ */ jsxRuntimeExports.jsx(
-                    Tooltip,
-                    {
-                      formatter: (value) => [formatNaira(value), "Amount"],
-                      contentStyle: {
-                        backgroundColor: "oklch(0.16 0.03 265)",
-                        border: "1px solid oklch(0.25 0.03 265)",
-                        borderRadius: "14px",
-                        color: "white",
-                        fontSize: "12px",
-                        fontWeight: 600
-                      }
-                    }
-                  )
-                ] }) }),
-                /* @__PURE__ */ jsxRuntimeExports.jsx(DonutCenterOverlay, { ratio: savingsRatio })
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wider", children: chartView === "expenses" ? "Expenditure Breakdown" : "Income Sources" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx(
+                  "fieldset",
+                  {
+                    className: "flex rounded-xl p-0.5 gap-0.5 border-0 m-0",
+                    style: {
+                      backgroundColor: "oklch(var(--muted))",
+                      padding: "0.125rem"
+                    },
+                    "aria-label": "Chart view",
+                    "data-ocid": "analytics.chart_view_toggle",
+                    children: ["expenses", "income"].map((view) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "button",
+                      {
+                        type: "button",
+                        "data-ocid": `analytics.chart_view.${view}`,
+                        onClick: () => setChartView(view),
+                        className: "flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-smooth",
+                        style: chartView === view ? {
+                          background: "oklch(var(--card))",
+                          color: view === "income" ? "#2D6A4F" : "oklch(var(--foreground))",
+                          boxShadow: "0 1px 4px oklch(var(--primary) / 0.14)"
+                        } : { color: "oklch(var(--muted-foreground))" },
+                        children: [
+                          view === "income" ? /* @__PURE__ */ jsxRuntimeExports.jsx(TrendingUp, { className: "w-3 h-3" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChartPie, { className: "w-3 h-3" }),
+                          view === "income" ? "Income" : "Expenses"
+                        ]
+                      },
+                      view
+                    ))
+                  }
+                )
               ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.96 },
+                  animate: { opacity: 1, scale: 1 },
+                  exit: { opacity: 0, scale: 0.96 },
+                  transition: { duration: 0.25 },
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", style: { height: 280 }, children: [
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(ResponsiveContainer, { width: "100%", height: "100%", children: /* @__PURE__ */ jsxRuntimeExports.jsxs(PieChart, { margin: { top: 16, right: 36, bottom: 16, left: 36 }, children: [
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        Pie,
+                        {
+                          data: chartView === "expenses" ? expenseCategories : mockData.cashflowInflows,
+                          cx: "50%",
+                          cy: "50%",
+                          innerRadius: 72,
+                          outerRadius: 108,
+                          paddingAngle: 3,
+                          dataKey: "amount",
+                          startAngle: 90,
+                          endAngle: -270,
+                          label: renderPieLabel,
+                          labelLine: false,
+                          children: (chartView === "expenses" ? expenseCategories : mockData.cashflowInflows).map((entry) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            Cell,
+                            {
+                              fill: chartView === "expenses" ? CATEGORY_COLORS[entry.name] ?? entry.color ?? "#888" : INCOME_COLORS[entry.name] ?? "#2D6A4F",
+                              stroke: "transparent",
+                              strokeWidth: 0
+                            },
+                            entry.name
+                          ))
+                        }
+                      ),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx(
+                        Tooltip,
+                        {
+                          formatter: (value) => [
+                            formatNaira(value),
+                            "Amount"
+                          ],
+                          contentStyle: {
+                            backgroundColor: "oklch(0.16 0.03 265)",
+                            border: "1px solid oklch(0.25 0.03 265)",
+                            borderRadius: "14px",
+                            color: "white",
+                            fontSize: "12px",
+                            fontWeight: 600
+                          }
+                        }
+                      )
+                    ] }) }),
+                    /* @__PURE__ */ jsxRuntimeExports.jsx(DonutCenterOverlay, { ratio: savingsRatio, chartView })
+                  ] })
+                },
+                chartView
+              ) }),
               /* @__PURE__ */ jsxRuntimeExports.jsx(
                 "div",
                 {
                   className: "grid grid-cols-2 gap-x-4 gap-y-2 mt-3 pt-3 border-t",
                   style: { borderColor: "oklch(var(--border))" },
-                  children: expenseCategories.map((cat) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
-                    "div",
-                    {
-                      className: "flex items-center gap-2",
-                      "data-ocid": `analytics.legend.${cat.name.toLowerCase()}`,
-                      children: [
-                        /* @__PURE__ */ jsxRuntimeExports.jsx(
-                          "span",
-                          {
-                            className: "w-2.5 h-2.5 rounded-full flex-shrink-0",
-                            style: {
-                              backgroundColor: CATEGORY_COLORS[cat.name] ?? cat.color
+                  children: (chartView === "expenses" ? expenseCategories : mockData.cashflowInflows).map((item) => {
+                    const total = chartView === "expenses" ? expenseCategories.reduce((s2, c2) => s2 + c2.amount, 0) : mockData.cashflowInflows.reduce((s2, i) => s2 + i.amount, 0);
+                    const fillColor = chartView === "expenses" ? CATEGORY_COLORS[item.name] ?? item.color ?? "#888" : INCOME_COLORS[item.name] ?? "#2D6A4F";
+                    return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                      "div",
+                      {
+                        className: "flex items-center gap-2",
+                        "data-ocid": `analytics.legend.${item.name.toLowerCase().replace(/\s+/g, "_")}`,
+                        children: [
+                          /* @__PURE__ */ jsxRuntimeExports.jsx(
+                            "span",
+                            {
+                              className: "w-2.5 h-2.5 rounded-full flex-shrink-0",
+                              style: { backgroundColor: fillColor }
                             }
-                          }
-                        ),
-                        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-foreground truncate", children: cat.name }),
-                        /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground ml-auto", children: [
-                          (cat.amount / expenseCategories.reduce((s2, c2) => s2 + c2.amount, 0) * 100).toFixed(0),
-                          "%"
-                        ] })
-                      ]
-                    },
-                    cat.name
-                  ))
+                          ),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-medium text-foreground truncate", children: item.name }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-xs text-muted-foreground ml-auto", children: [
+                            (item.amount / total * 100).toFixed(0),
+                            "%"
+                          ] })
+                        ]
+                      },
+                      item.name
+                    );
+                  })
                 }
               )
             ]
@@ -28707,6 +29018,7 @@ function ExpensesView({ savingsRatio }) {
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3", children: "Category Details" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-col gap-3", children: expenseCategories.map((cat, i) => /* @__PURE__ */ jsxRuntimeExports.jsx(CategoryRow, { cat, index: i }, cat.name)) })
         ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(BudgetPlannerSection, {}),
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           motion.div,
           {

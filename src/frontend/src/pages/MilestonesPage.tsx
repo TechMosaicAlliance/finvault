@@ -1,6 +1,12 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { formatNaira, mockData } from "@/data/mockData";
 import type { FinancialGoal, FinancialProfile } from "@/data/mockData";
-import { CheckCircle2, Lock, Star, Zap } from "lucide-react";
+import { CheckCircle2, Lock, Star, Trophy, Zap } from "lucide-react";
 import { useState } from "react";
 
 // ─── Static data ──────────────────────────────────────────────────────────────
@@ -121,7 +127,255 @@ function ProfileChip({
   );
 }
 
+// ─── Goal Dialog ────────────────────────────────────────────────────────────
+
+function getConsistencyRating(progressPercent: number): number {
+  if (progressPercent > 50) return 72;
+  if (progressPercent >= 25) return 48;
+  return 21;
+}
+
+function getMonthsToCompletion(goal: FinancialGoal): string {
+  const remaining = goal.targetAmount - goal.currentAmount;
+  const monthlyContrib = goal.currentAmount / 6; // 6 months assumed since start
+  if (monthlyContrib <= 0) return "30+";
+  const months = remaining / monthlyContrib;
+  if (months > 30) return "30+";
+  return Math.ceil(months).toString();
+}
+
+function ConsistencyArc({ percent }: { percent: number }) {
+  const r = 28;
+  const circ = 2 * Math.PI * r;
+  const filled = (percent / 100) * circ * 0.75; // 270deg arc
+  const isHigh = percent >= 60;
+  return (
+    <div
+      className="relative flex items-center justify-center"
+      style={{ width: 80, height: 80 }}
+    >
+      <svg
+        width="80"
+        height="80"
+        viewBox="0 0 80 80"
+        style={{ transform: "rotate(135deg)" }}
+      >
+        <title>Consistency arc</title>
+        <circle
+          cx="40"
+          cy="40"
+          r={r}
+          fill="none"
+          strokeWidth="7"
+          style={{ stroke: "oklch(var(--muted))" }}
+          strokeDasharray={`${circ * 0.75} ${circ}`}
+          strokeLinecap="round"
+        />
+        <circle
+          cx="40"
+          cy="40"
+          r={r}
+          fill="none"
+          strokeWidth="7"
+          style={{
+            stroke: isHigh ? "oklch(var(--accent))" : "oklch(var(--primary))",
+          }}
+          strokeDasharray={`${filled} ${circ}`}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span
+          className="text-base font-bold"
+          style={{
+            color: isHigh ? "oklch(var(--accent))" : "oklch(var(--primary))",
+          }}
+        >
+          {percent}%
+        </span>
+        <span className="text-[8px] text-muted-foreground font-medium">
+          consist.
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function GoalDetailDialog({
+  goal,
+  open,
+  onClose,
+}: { goal: FinancialGoal; open: boolean; onClose: () => void }) {
+  const remaining = goal.targetAmount - goal.currentAmount;
+  const consistency = getConsistencyRating(goal.progressPercent);
+  const monthsToComplete = getMonthsToCompletion(goal);
+  const isHighProgress = goal.progressPercent >= 60;
+  const gradientFill = isHighProgress
+    ? "linear-gradient(90deg, #2D6A4F 0%, #52c788 100%)"
+    : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent
+        data-ocid="milestones.goal_detail.dialog"
+        className="max-w-[360px] mx-auto rounded-[24px] border-0 p-0 overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(160deg, oklch(var(--card)) 0%, oklch(var(--background)) 100%)",
+          border: "1.5px solid oklch(var(--border) / 0.8)",
+          boxShadow:
+            "0 24px 64px oklch(var(--primary) / 0.25), 0 0 0 1px oklch(var(--border) / 0.3)",
+        }}
+      >
+        {/* Hero strip */}
+        <div
+          className="w-full px-6 pt-6 pb-5 flex items-center gap-4"
+          style={{
+            background: isHighProgress
+              ? "linear-gradient(135deg, oklch(var(--accent) / 0.15), oklch(var(--accent) / 0.05))"
+              : "linear-gradient(135deg, oklch(var(--primary) / 0.15), oklch(var(--primary) / 0.05))",
+            borderBottom: "1px solid oklch(var(--border) / 0.4)",
+          }}
+        >
+          <div
+            className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0"
+            style={{
+              background: isHighProgress
+                ? "oklch(var(--accent) / 0.18)"
+                : "oklch(var(--primary) / 0.18)",
+              border: `2px solid ${isHighProgress ? "oklch(var(--accent) / 0.45)" : "oklch(var(--primary) / 0.35)"}`,
+              boxShadow: `0 0 16px ${isHighProgress ? "oklch(var(--accent) / 0.3)" : "oklch(var(--primary) / 0.25)"}`,
+            }}
+          >
+            {goal.icon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <DialogHeader>
+              <DialogTitle className="text-base font-bold text-foreground leading-tight">
+                {goal.name}
+              </DialogTitle>
+            </DialogHeader>
+            <p className="text-[10px] text-muted-foreground mt-0.5">
+              Target: {goal.targetDate}
+            </p>
+            <div className="flex items-center gap-1 mt-1.5">
+              <span
+                className="text-[9px] font-bold px-2 py-0.5 rounded-full"
+                style={{
+                  background: isHighProgress
+                    ? "oklch(var(--accent) / 0.15)"
+                    : "oklch(var(--primary) / 0.15)",
+                  color: isHighProgress
+                    ? "oklch(var(--accent))"
+                    : "oklch(var(--primary))",
+                  border: `1px solid ${isHighProgress ? "oklch(var(--accent) / 0.3)" : "oklch(var(--primary) / 0.3)"}`,
+                }}
+              >
+                {goal.progressPercent}% complete
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-6 py-5 flex flex-col gap-5">
+          {/* Consistency + forecast row */}
+          <div className="flex items-center gap-4">
+            <ConsistencyArc percent={consistency} />
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-1">
+                Completion Forecast
+              </p>
+              <p className="text-sm font-bold text-foreground leading-snug">
+                {monthsToComplete === "30+"
+                  ? "30+ months"
+                  : `${monthsToComplete} month${monthsToComplete === "1" ? "" : "s"}`}{" "}
+                remaining
+              </p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                At current pace
+              </p>
+            </div>
+          </div>
+
+          {/* Amount progress */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                Saved vs Target
+              </span>
+              <span className="text-[10px] text-muted-foreground">
+                {formatNaira(remaining)} remaining
+              </span>
+            </div>
+            <div
+              className="h-3 rounded-full overflow-hidden"
+              style={{ backgroundColor: "oklch(var(--muted))" }}
+            >
+              <div
+                className="h-full rounded-full transition-smooth"
+                style={{
+                  width: `${goal.progressPercent}%`,
+                  background: gradientFill,
+                  boxShadow: isHighProgress
+                    ? "0 0 10px oklch(var(--accent) / 0.5)"
+                    : "0 0 10px oklch(var(--primary) / 0.4)",
+                }}
+              />
+            </div>
+            <div className="flex items-center justify-between">
+              <span
+                className="text-xs font-bold"
+                style={{
+                  color: isHighProgress
+                    ? "oklch(var(--accent))"
+                    : "oklch(var(--primary))",
+                }}
+              >
+                {formatNaira(goal.currentAmount)}
+              </span>
+              <span className="text-[10px] text-muted-foreground">
+                {formatNaira(goal.targetAmount)}
+              </span>
+            </div>
+          </div>
+
+          {/* Monthly contribution est. */}
+          <div
+            className="flex items-center gap-2.5 px-3 py-3 rounded-2xl"
+            style={{
+              background: isHighProgress
+                ? "oklch(var(--accent) / 0.08)"
+                : "oklch(var(--primary) / 0.08)",
+              border: `1px solid ${isHighProgress ? "oklch(var(--accent) / 0.2)" : "oklch(var(--primary) / 0.2)"}`,
+            }}
+          >
+            <Zap
+              size={14}
+              style={{
+                color: isHighProgress
+                  ? "oklch(var(--accent))"
+                  : "oklch(var(--primary))",
+                flexShrink: 0,
+              }}
+            />
+            <p className="text-[11px] text-foreground font-medium">
+              Monthly contribution:{" "}
+              <span className="font-bold">
+                {formatNaira(Math.round(goal.currentAmount / 6))}
+              </span>{" "}
+              · Keep going!
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// ─── GoalCard ─────────────────────────────────────────────────────────────────
+
 function GoalCard({ goal, index }: { goal: FinancialGoal; index: number }) {
+  const [dialogOpen, setDialogOpen] = useState(false);
   const remaining = goal.targetAmount - goal.currentAmount;
   const isHighProgress = goal.progressPercent >= 60;
   const gradientFill = isHighProgress
@@ -129,114 +383,124 @@ function GoalCard({ goal, index }: { goal: FinancialGoal; index: number }) {
     : "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)";
 
   return (
-    <div
-      data-ocid={`milestones.goal.item.${index + 1}`}
-      className="glass-card glow-inner p-5 flex flex-col gap-4"
-    >
-      {/* Header row */}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex items-center gap-3">
+    <>
+      <GoalDetailDialog
+        goal={goal}
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+      />
+      <button
+        type="button"
+        data-ocid={`milestones.goal.item.${index + 1}`}
+        onClick={() => setDialogOpen(true)}
+        className="w-full text-left glass-card glow-inner p-5 flex flex-col gap-4 transition-smooth hover:scale-[1.01] active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2"
+        style={{ WebkitTapHighlightColor: "transparent" }}
+      >
+        {/* Header row */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+              style={{
+                background: isHighProgress
+                  ? "linear-gradient(135deg, oklch(var(--accent) / 0.2), oklch(var(--accent) / 0.05))"
+                  : "linear-gradient(135deg, oklch(var(--primary) / 0.2), oklch(var(--primary) / 0.05))",
+                border: `1.5px solid ${
+                  isHighProgress
+                    ? "oklch(var(--accent) / 0.4)"
+                    : "oklch(var(--primary) / 0.3)"
+                }`,
+              }}
+            >
+              {goal.icon}
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-foreground leading-tight">
+                {goal.name}
+              </p>
+              <p className="text-[10px] text-muted-foreground mt-0.5">
+                Target: {goal.targetDate}
+              </p>
+            </div>
+          </div>
           <div
-            className="w-11 h-11 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full"
             style={{
               background: isHighProgress
-                ? "linear-gradient(135deg, oklch(var(--accent) / 0.2), oklch(var(--accent) / 0.05))"
-                : "linear-gradient(135deg, oklch(var(--primary) / 0.2), oklch(var(--primary) / 0.05))",
-              border: `1.5px solid ${
+                ? "oklch(var(--accent) / 0.12)"
+                : "oklch(var(--primary) / 0.12)",
+              border: `1px solid ${
                 isHighProgress
-                  ? "oklch(var(--accent) / 0.4)"
+                  ? "oklch(var(--accent) / 0.3)"
                   : "oklch(var(--primary) / 0.3)"
               }`,
             }}
           >
-            {goal.icon}
-          </div>
-          <div className="min-w-0">
-            <p className="text-sm font-bold text-foreground leading-tight">
-              {goal.name}
-            </p>
-            <p className="text-[10px] text-muted-foreground mt-0.5">
-              Target: {goal.targetDate}
-            </p>
+            <Star
+              size={10}
+              style={{
+                color: isHighProgress
+                  ? "oklch(var(--accent))"
+                  : "oklch(var(--primary))",
+              }}
+            />
+            <span
+              className="text-xs font-bold"
+              style={{
+                color: isHighProgress
+                  ? "oklch(var(--accent))"
+                  : "oklch(var(--primary))",
+              }}
+            >
+              {goal.progressPercent}%
+            </span>
           </div>
         </div>
-        <div
-          className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full"
-          style={{
-            background: isHighProgress
-              ? "oklch(var(--accent) / 0.12)"
-              : "oklch(var(--primary) / 0.12)",
-            border: `1px solid ${
-              isHighProgress
-                ? "oklch(var(--accent) / 0.3)"
-                : "oklch(var(--primary) / 0.3)"
-            }`,
-          }}
-        >
-          <Star
-            size={10}
-            style={{
-              color: isHighProgress
-                ? "oklch(var(--accent))"
-                : "oklch(var(--primary))",
-            }}
-          />
-          <span
-            className="text-xs font-bold"
-            style={{
-              color: isHighProgress
-                ? "oklch(var(--accent))"
-                : "oklch(var(--primary))",
-            }}
-          >
-            {goal.progressPercent}%
-          </span>
-        </div>
-      </div>
 
-      {/* Progress bar */}
-      <div className="flex flex-col gap-2">
-        <div
-          className="h-3 rounded-full overflow-hidden"
-          style={{ backgroundColor: "oklch(var(--muted))" }}
-        >
+        {/* Progress bar */}
+        <div className="flex flex-col gap-2">
           <div
-            className="h-full rounded-full transition-smooth"
-            style={{
-              width: `${goal.progressPercent}%`,
-              background: gradientFill,
-              boxShadow: isHighProgress
-                ? "0 0 10px oklch(var(--accent) / 0.5)"
-                : "0 0 10px oklch(var(--primary) / 0.4)",
-            }}
-          />
-        </div>
-        <div className="flex items-center justify-between">
-          <span
-            className="text-[11px] font-semibold"
-            style={{
-              color: isHighProgress
-                ? "oklch(var(--accent))"
-                : "oklch(var(--primary))",
-            }}
+            className="h-3 rounded-full overflow-hidden"
+            style={{ backgroundColor: "oklch(var(--muted))" }}
           >
-            {formatNaira(goal.currentAmount)} saved
-          </span>
-          <span className="text-[10px] text-muted-foreground">
-            {formatNaira(goal.targetAmount)} goal
-          </span>
+            <div
+              className="h-full rounded-full transition-smooth"
+              style={{
+                width: `${goal.progressPercent}%`,
+                background: gradientFill,
+                boxShadow: isHighProgress
+                  ? "0 0 10px oklch(var(--accent) / 0.5)"
+                  : "0 0 10px oklch(var(--primary) / 0.4)",
+              }}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span
+              className="text-[11px] font-semibold"
+              style={{
+                color: isHighProgress
+                  ? "oklch(var(--accent))"
+                  : "oklch(var(--primary))",
+              }}
+            >
+              {formatNaira(goal.currentAmount)} saved
+            </span>
+            <span className="text-[10px] text-muted-foreground">
+              {formatNaira(goal.targetAmount)} goal
+            </span>
+          </div>
+          <div
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
+            style={{ backgroundColor: "oklch(var(--muted) / 0.7)" }}
+          >
+            <Zap size={10} className="text-muted-foreground" />
+            <span className="text-[10px] text-muted-foreground font-medium">
+              {formatNaira(remaining)} to go · Tap for details
+            </span>
+          </div>
         </div>
-        <div
-          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl"
-          style={{ backgroundColor: "oklch(var(--muted) / 0.7)" }}
-        >
-          <Zap size={10} className="text-muted-foreground" />
-          <span className="text-[10px] text-muted-foreground font-medium">
-            {formatNaira(remaining)} to go · Keep the momentum
-          </span>
-        </div>
-      </div>
-    </div>
+      </button>
+    </>
   );
 }
 
@@ -367,12 +631,273 @@ function RoadmapNode({
   );
 }
 
+// ─── Badge Dialog ───────────────────────────────────────────────────────────
+
+const badgeDetails = [
+  {
+    what: "Saved your first ₦1 million — a landmark achievement in your financial journey.",
+    when: "March 2025",
+    how: "Accumulated ₦1,000,000 across all savings accounts and goals.",
+    unlockRequirement: "Accumulate ₦1,000,000 in total savings.",
+  },
+  {
+    what: "Maintained a perfect 3-month saving streak without missing a single contribution.",
+    when: "January 2025",
+    how: "Made consistent monthly contributions for 3 consecutive months.",
+    unlockRequirement:
+      "Make savings contributions every month for 3 months straight.",
+  },
+  {
+    what: "Stayed within budget across all expense categories for a full month.",
+    when: "April 2025",
+    how: "Tracked all spending and kept every category under its planned budget.",
+    unlockRequirement:
+      "Stay under budget in every expense category for one full month.",
+  },
+  {
+    what: "Own a piece of property — land, house, or real estate investment.",
+    when: "",
+    how: "",
+    unlockRequirement:
+      "Log a property purchase or land ownership worth ₦2M or more.",
+  },
+  {
+    what: "Eliminate all outstanding debt and liabilities from your financial profile.",
+    when: "",
+    how: "",
+    unlockRequirement:
+      "Zero out all logged debt entries in the Accounts section.",
+  },
+  {
+    what: "Reach a total net worth of ₦10 million across all accounts and investments.",
+    when: "",
+    how: "",
+    unlockRequirement:
+      "Accumulate ₦10,000,000 total across all linked accounts and goals.",
+  },
+];
+
+// Seed-based progress for locked badges (30–65%)
+function getLockedProgress(badgeIndex: number): number {
+  const seeds = [42, 58, 31, 65, 47];
+  return seeds[badgeIndex % seeds.length] ?? 38;
+}
+
+function BadgeDialog({
+  badge,
+  badgeIndex,
+  open,
+  onClose,
+}: {
+  badge: (typeof achievementBadges)[0];
+  badgeIndex: number;
+  open: boolean;
+  onClose: () => void;
+}) {
+  const details = badgeDetails[badgeIndex];
+  const lockedProgress = getLockedProgress(badgeIndex);
+
+  return (
+    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent
+        data-ocid="milestones.badge_detail.dialog"
+        className="max-w-[360px] mx-auto rounded-[24px] border-0 p-0 overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(160deg, oklch(var(--card)) 0%, oklch(var(--background)) 100%)",
+          border: "1.5px solid oklch(var(--border) / 0.8)",
+          boxShadow:
+            "0 24px 64px rgba(0,0,0,0.2), 0 0 0 1px oklch(var(--border) / 0.3)",
+        }}
+      >
+        {/* Hero */}
+        <div
+          className="px-6 pt-6 pb-5 flex flex-col items-center gap-3"
+          style={{
+            background: badge.unlocked
+              ? `${badge.gradient}`
+              : "oklch(var(--muted) / 0.5)",
+            borderBottom: "1px solid oklch(var(--border) / 0.4)",
+            filter: badge.unlocked ? "none" : "grayscale(1)",
+          }}
+        >
+          <div
+            className="w-16 h-16 rounded-full flex items-center justify-center text-3xl"
+            style={{
+              background: badge.unlocked
+                ? "rgba(255,255,255,0.15)"
+                : "oklch(var(--muted))",
+              boxShadow: badge.unlocked
+                ? "0 0 20px rgba(255,255,255,0.25)"
+                : "none",
+              border: badge.unlocked
+                ? "2px solid rgba(255,255,255,0.2)"
+                : "2px solid oklch(var(--border))",
+            }}
+          >
+            {badge.icon}
+          </div>
+          <DialogHeader>
+            <DialogTitle
+              className="text-base font-bold text-center"
+              style={{
+                color: badge.unlocked
+                  ? "rgba(255,255,255,0.95)"
+                  : "oklch(var(--foreground))",
+              }}
+            >
+              {badge.label}
+            </DialogTitle>
+          </DialogHeader>
+          <span
+            className="text-[9px] font-bold px-2.5 py-0.5 rounded-full"
+            style={{
+              background: badge.unlocked
+                ? "rgba(255,255,255,0.15)"
+                : "oklch(var(--border))",
+              color: badge.unlocked
+                ? "rgba(255,255,255,0.8)"
+                : "oklch(var(--muted-foreground))",
+            }}
+          >
+            {badge.sublabel} {badge.unlocked ? "· Unlocked" : "· Locked"}
+          </span>
+        </div>
+
+        <div className="px-6 py-5 flex flex-col gap-4">
+          {badge.unlocked ? (
+            // ── Unlocked content
+            <>
+              <div className="flex flex-col gap-3">
+                {/* WHAT */}
+                <div
+                  className="flex flex-col gap-1 px-3.5 py-3 rounded-2xl"
+                  style={{
+                    background: "oklch(var(--accent) / 0.08)",
+                    border: "1px solid oklch(var(--accent) / 0.2)",
+                  }}
+                >
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                    What
+                  </span>
+                  <p className="text-[11px] text-foreground font-medium leading-relaxed">
+                    {details?.what}
+                  </p>
+                </div>
+                {/* WHEN */}
+                <div
+                  className="flex items-center gap-3 px-3.5 py-3 rounded-2xl"
+                  style={{
+                    background: "oklch(var(--primary) / 0.08)",
+                    border: "1px solid oklch(var(--primary) / 0.2)",
+                  }}
+                >
+                  <Trophy
+                    size={14}
+                    style={{ color: "oklch(var(--primary))", flexShrink: 0 }}
+                  />
+                  <div className="min-w-0">
+                    <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider block">
+                      When
+                    </span>
+                    <p className="text-[11px] text-foreground font-bold">
+                      {details?.when}
+                    </p>
+                  </div>
+                </div>
+                {/* HOW */}
+                <div
+                  className="flex flex-col gap-1 px-3.5 py-3 rounded-2xl"
+                  style={{
+                    background: "oklch(var(--muted) / 0.7)",
+                    border: "1px solid oklch(var(--border) / 0.5)",
+                  }}
+                >
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                    How
+                  </span>
+                  <p className="text-[11px] text-muted-foreground font-medium leading-relaxed">
+                    {details?.how}
+                  </p>
+                </div>
+              </div>
+            </>
+          ) : (
+            // ── Locked content
+            <>
+              {/* Unlock requirement */}
+              <div
+                className="flex flex-col gap-1.5 px-3.5 py-3 rounded-2xl"
+                style={{
+                  background: "oklch(var(--muted) / 0.7)",
+                  border: "1px solid oklch(var(--border) / 0.5)",
+                }}
+              >
+                <div className="flex items-center gap-2">
+                  <Lock
+                    size={12}
+                    className="text-muted-foreground flex-shrink-0"
+                  />
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-wider">
+                    Unlock Requirement
+                  </span>
+                </div>
+                <p className="text-[11px] text-foreground font-medium leading-relaxed">
+                  {details?.unlockRequirement}
+                </p>
+              </div>
+
+              {/* Distance to goal progress */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                    Progress to Unlock
+                  </span>
+                  <span
+                    className="text-[10px] font-bold"
+                    style={{ color: "oklch(var(--primary))" }}
+                  >
+                    {lockedProgress}%
+                  </span>
+                </div>
+                <div
+                  className="h-2.5 rounded-full overflow-hidden"
+                  style={{ backgroundColor: "oklch(var(--muted))" }}
+                >
+                  <div
+                    className="h-full rounded-full transition-smooth"
+                    style={{
+                      width: `${lockedProgress}%`,
+                      background:
+                        "linear-gradient(90deg, #1A2B4C 0%, #3a6bc9 100%)",
+                      boxShadow: "0 0 8px oklch(var(--primary) / 0.4)",
+                    }}
+                  />
+                </div>
+                <p
+                  className="text-[10px] font-semibold text-center"
+                  style={{ color: "oklch(var(--primary))" }}
+                >
+                  {100 - lockedProgress}% more to unlock this badge
+                </p>
+              </div>
+            </>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
 export default function MilestonesPage() {
   const { profiles, goals } = mockData;
   const [activeProfileId, setActiveProfileId] = useState(
     mockData.selectedProfileId,
+  );
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = useState<number | null>(
+    null,
   );
   const activeProfile =
     profiles.find((p) => p.id === activeProfileId) ?? profiles[0];
@@ -540,12 +1065,24 @@ export default function MilestonesPage() {
           </span>
         </div>
         <div className="grid grid-cols-3 gap-3">
+          {/* Badge dialog */}
+          {selectedBadgeIndex !== null && (
+            <BadgeDialog
+              badge={achievementBadges[selectedBadgeIndex]}
+              badgeIndex={selectedBadgeIndex}
+              open={selectedBadgeIndex !== null}
+              onClose={() => setSelectedBadgeIndex(null)}
+            />
+          )}
           {achievementBadges.map((badge, i) => (
-            <div
+            <button
+              type="button"
               key={badge.label}
               data-ocid={`milestones.badge.item.${i + 1}`}
-              className="relative flex flex-col items-center gap-2 p-4 rounded-[20px] text-center overflow-hidden"
+              onClick={() => setSelectedBadgeIndex(i)}
+              className="relative flex flex-col items-center gap-2 p-4 rounded-[20px] text-center overflow-hidden transition-smooth hover:scale-[1.04] active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2"
               style={{
+                WebkitTapHighlightColor: "transparent",
                 background: badge.unlocked
                   ? badge.gradient
                   : "oklch(var(--muted) / 0.5)",
@@ -615,7 +1152,7 @@ export default function MilestonesPage() {
                   </div>
                 </div>
               )}
-            </div>
+            </button>
           ))}
         </div>
       </section>

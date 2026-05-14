@@ -1,27 +1,19 @@
+import { TransactionForm } from "@/components/TransactionForm";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { type Transaction, formatNaira, mockData } from "@/data/mockData";
+import { Link } from "@tanstack/react-router";
 import {
   ChevronRight,
   Plus,
   TrendingDown,
   TrendingUp,
-  X,
   Zap,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
-type ViewMode = "Daily" | "Monthly" | "Annual";
+type ViewMode = "Daily" | "Weekly" | "Monthly" | "Annual";
 
-// ─── Circular Progress Ring ────────────────────────────────────────────────
+// ─── Compact Circular Progress Ring ─────────────────────────────────────────
 function CircularProgressRing({
   percent,
   value,
@@ -29,8 +21,8 @@ function CircularProgressRing({
   percent: number;
   value: number;
 }) {
-  const size = 200;
-  const strokeWidth = 12;
+  const size = 110;
+  const strokeWidth = 8;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const [animated, setAnimated] = useState(false);
@@ -44,8 +36,11 @@ function CircularProgressRing({
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center pt-6 pb-4 px-4">
-      <div className="relative" style={{ width: size, height: size }}>
+    <div className="flex items-center gap-4 px-4 pt-3 pb-3">
+      <div
+        className="relative flex-shrink-0"
+        style={{ width: size, height: size }}
+      >
         <svg
           width={size}
           height={size}
@@ -53,17 +48,15 @@ function CircularProgressRing({
           className="-rotate-90"
           aria-hidden="true"
         >
-          {/* Outer decorative dashed ring */}
           <circle
             cx={size / 2}
             cy={size / 2}
-            r={radius + 10}
+            r={radius + 5}
             fill="none"
-            stroke="oklch(var(--border) / 0.4)"
+            stroke="oklch(var(--border) / 0.3)"
             strokeWidth="1"
-            strokeDasharray="4 6"
+            strokeDasharray="3 5"
           />
-          {/* Track */}
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -72,7 +65,6 @@ function CircularProgressRing({
             stroke="oklch(var(--muted))"
             strokeWidth={strokeWidth}
           />
-          {/* Progress arc */}
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -85,40 +77,60 @@ function CircularProgressRing({
             strokeDashoffset={strokeDashoffset}
             style={{
               transition: "stroke-dashoffset 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
-              filter: "drop-shadow(0 0 10px oklch(var(--accent) / 0.6))",
+              filter: "drop-shadow(0 0 6px oklch(var(--accent) / 0.55))",
             }}
-          />
-          {/* Inner depth ring */}
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius - 14}
-            fill="none"
-            stroke="oklch(var(--accent) / 0.12)"
-            strokeWidth="4"
-            strokeDasharray={`${circumference * 0.3} ${circumference * 0.7}`}
-            strokeDashoffset={circumference * 0.15}
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <span
-            className="text-xs font-bold tracking-widest uppercase mb-1"
+            className="text-[9px] font-bold tracking-widest uppercase"
             style={{ color: "oklch(var(--accent))" }}
           >
             {percent}%
           </span>
-          <span className="text-3xl font-bold text-foreground leading-none">
+          <span className="text-base font-bold text-foreground leading-none">
             {formatNaira(value)}
-          </span>
-          <span className="text-xs text-muted-foreground mt-1.5 font-medium">
-            Safe to Spend
           </span>
         </div>
       </div>
-      <h2 className="text-lg font-bold text-foreground mt-1 tracking-tight">
-        Safe to Spend Today
-      </h2>
-      <p className="text-xs text-muted-foreground mt-0.5">Updated just now</p>
+      <div className="flex flex-col gap-0.5 min-w-0">
+        <h2 className="text-base font-bold text-foreground tracking-tight leading-tight">
+          Safe to Spend
+        </h2>
+        <p className="text-xs text-muted-foreground">Updated just now</p>
+        <div className="flex gap-3 mt-1.5">
+          <div className="flex flex-col">
+            <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+              Inflow
+            </span>
+            <span
+              className="text-xs font-bold"
+              style={{ color: "oklch(var(--accent))" }}
+            >
+              +{formatNaira(160000)}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+              Outflow
+            </span>
+            <span className="text-xs font-bold text-foreground">
+              −{formatNaira(220900)}
+            </span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+              Saved
+            </span>
+            <span
+              className="text-xs font-bold"
+              style={{ color: "oklch(var(--accent))" }}
+            >
+              {formatNaira(75000)}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -134,7 +146,6 @@ const SPARKLINE_START: [number, number][] = [
   [108, 36],
   [126, 24],
 ];
-
 const SPARKLINE_CURRENT: [number, number][] = [
   [0, 48],
   [18, 42],
@@ -200,21 +211,24 @@ function BalanceCard({
   const color = isUp ? "oklch(var(--accent))" : "oklch(var(--chart-4))";
   const Icon = isUp ? TrendingUp : TrendingDown;
   return (
-    <div className="glass-card glow-inner flex-1 p-4 flex flex-col gap-0.5 overflow-hidden">
-      <span className="text-[11px] text-muted-foreground font-semibold uppercase tracking-widest">
+    <div className="glass-card glow-inner flex-1 p-4 flex flex-col gap-0.5 overflow-hidden relative">
+      <span className="relative z-10 text-[11px] text-muted-foreground font-semibold uppercase tracking-widest text-center">
         {label}
       </span>
-      <span className="text-xl font-bold text-foreground leading-tight">
+      <span className="relative z-10 text-xl font-black text-foreground leading-tight text-center">
         {formatNaira(value)}
       </span>
-      <div className="flex items-center gap-1 mt-0.5">
+      <div className="relative z-10 flex items-center justify-center gap-1 mt-0.5">
         <Icon size={12} style={{ color }} />
         <span className="text-[11px] font-semibold" style={{ color }}>
           {delta}
         </span>
         <span className="text-[11px] text-muted-foreground">{deltaLabel}</span>
       </div>
-      <SparkLine data={sparkData} color={color} />
+      {/* Underlay sparkline — z-0, behind text */}
+      <div className="absolute bottom-0 left-0 right-0 z-0 opacity-60">
+        <SparkLine data={sparkData} color={color} />
+      </div>
     </div>
   );
 }
@@ -234,27 +248,32 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 // ─── Transaction Row ───────────────────────────────────────────────────────
 function TransactionRow({ tx, index }: { tx: Transaction; index: number }) {
-  const isCredit = tx.transactionType === "credit";
+  // Color by transaction semantic type: income=green, expense=red, transfer=grey
+  const amountColor =
+    tx.transactionType === "credit"
+      ? "oklch(var(--accent))"
+      : "oklch(var(--destructive))";
   const catColor =
     CATEGORY_COLORS[tx.category] ?? "oklch(var(--muted-foreground))";
+  const iconBg =
+    tx.transactionType === "credit"
+      ? "oklch(var(--accent) / 0.12)"
+      : "oklch(var(--destructive) / 0.10)";
 
   return (
     <div
       data-ocid={`activity.item.${index + 1}`}
       className="flex items-center gap-3 py-3.5 border-b border-border/20 last:border-0"
     >
-      {/* Icon circle */}
       <div
         className="w-10 h-10 rounded-2xl flex items-center justify-center text-lg flex-shrink-0 shadow-sm"
-        style={{ background: catColor.replace(")", " / 0.12)") }}
+        style={{ background: iconBg }}
         aria-hidden="true"
       >
         <span role="img" aria-label={tx.category}>
           {tx.icon}
         </span>
       </div>
-
-      {/* Center: description + AI badge + category */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 mb-0.5">
           <p className="text-sm font-semibold text-foreground truncate leading-tight">
@@ -285,18 +304,12 @@ function TransactionRow({ tx, index }: { tx: Transaction; index: number }) {
           {tx.category}
         </span>
       </div>
-
-      {/* Amount + date */}
       <div className="flex flex-col items-end gap-0.5 flex-shrink-0">
         <span
           className="text-sm font-bold leading-tight"
-          style={{
-            color: isCredit
-              ? "oklch(var(--accent))"
-              : "oklch(var(--foreground))",
-          }}
+          style={{ color: amountColor }}
         >
-          {isCredit ? "+" : "−"}
+          {tx.transactionType === "credit" ? "+" : "−"}
           {formatNaira(tx.amount)}
         </span>
         <span className="text-[10px] text-muted-foreground">
@@ -307,183 +320,114 @@ function TransactionRow({ tx, index }: { tx: Transaction; index: number }) {
   );
 }
 
-// ─── Manual Entry Modal ────────────────────────────────────────────────────
-const CATEGORIES = [
-  "Feeding",
-  "Transportation",
-  "Housing",
-  "Grooming",
-  "Gifts",
-  "Savings",
-  "Investment",
-  "Utilities",
-  "Other",
-];
+// ─── Period Detail Panel ───────────────────────────────────────────────────
+const TODAY = "2026-05-12";
+const CURRENT_MONTH = "2026-05";
+const CURRENT_YEAR = "2026";
 
-function AddTransactionModal({
-  open,
-  onClose,
-}: { open: boolean; onClose: () => void }) {
-  const [desc, setDesc] = useState("");
-  const [amount, setAmount] = useState("");
-  const [category, setCategory] = useState("Feeding");
-  const [type, setType] = useState<"credit" | "debit">("debit");
-  const inputRef = useRef<HTMLInputElement>(null);
+function getWeekRange(): { start: string; end: string } {
+  const today = new Date(TODAY);
+  const day = today.getDay(); // 0=Sun
+  const diff = day === 0 ? 6 : day - 1; // Mon-based
+  const mon = new Date(today);
+  mon.setDate(today.getDate() - diff);
+  const sun = new Date(mon);
+  sun.setDate(mon.getDate() + 6);
+  const fmt = (d: Date) => d.toISOString().slice(0, 10);
+  return { start: fmt(mon), end: fmt(sun) };
+}
 
-  useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100);
-  }, [open]);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    onClose();
-    setDesc("");
-    setAmount("");
+function getPeriodData(
+  mode: ViewMode,
+  transactions: Transaction[],
+): { spent: number; received: number } {
+  let filtered: Transaction[] = [];
+  if (mode === "Daily") {
+    filtered = transactions.filter((t) => t.date === TODAY);
+  } else if (mode === "Weekly") {
+    const { start, end } = getWeekRange();
+    filtered = transactions.filter((t) => t.date >= start && t.date <= end);
+  } else if (mode === "Monthly") {
+    filtered = transactions.filter((t) => t.date.startsWith(CURRENT_MONTH));
+  } else if (mode === "Annual") {
+    filtered = transactions.filter((t) => t.date.startsWith(CURRENT_YEAR));
   }
+  const spent = filtered
+    .filter((t) => t.transactionType === "debit")
+    .reduce((s, t) => s + t.amount, 0);
+  const received = filtered
+    .filter((t) => t.transactionType === "credit")
+    .reduce((s, t) => s + t.amount, 0);
+  return { spent, received };
+}
+
+function PeriodDetailPanel({
+  mode,
+  transactions,
+}: {
+  mode: ViewMode;
+  transactions: Transaction[];
+}) {
+  const { spent, received } = getPeriodData(mode, transactions);
+  const periodLabel =
+    mode === "Daily"
+      ? "Today"
+      : mode === "Weekly"
+        ? "This Week"
+        : mode === "Monthly"
+          ? "This Month"
+          : "This Year";
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent
-        data-ocid="add_transaction.dialog"
-        className="max-w-sm mx-auto p-0 overflow-hidden border-0 rounded-3xl"
-        style={{
-          background: "oklch(var(--card) / 0.92)",
-          backdropFilter: "blur(24px)",
-        }}
-      >
-        <div className="p-6">
-          <DialogHeader className="mb-5">
-            <DialogTitle className="text-lg font-bold text-foreground">
-              Add Transaction
-            </DialogTitle>
-          </DialogHeader>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {/* Type toggle */}
-            <div
-              className="flex gap-2 p-1 rounded-2xl"
-              style={{ background: "oklch(var(--muted))" }}
-            >
-              {(["debit", "credit"] as const).map((t) => (
-                <button
-                  key={t}
-                  type="button"
-                  data-ocid={`add_transaction.type.${t}`}
-                  onClick={() => setType(t)}
-                  className="flex-1 py-2 rounded-xl text-sm font-semibold transition-smooth"
-                  style={{
-                    background:
-                      type === t
-                        ? t === "credit"
-                          ? "oklch(var(--accent) / 0.2)"
-                          : "oklch(var(--destructive) / 0.2)"
-                        : "transparent",
-                    color:
-                      type === t
-                        ? t === "credit"
-                          ? "oklch(var(--accent))"
-                          : "oklch(var(--destructive))"
-                        : "oklch(var(--muted-foreground))",
-                    border:
-                      type === t
-                        ? `1px solid ${t === "credit" ? "oklch(var(--accent) / 0.4)" : "oklch(var(--destructive) / 0.4)"}`
-                        : "1px solid transparent",
-                  }}
-                >
-                  {t === "credit" ? "↑ Income" : "↓ Expense"}
-                </button>
-              ))}
-            </div>
-
-            {/* Description */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="tx-desc"
-                className="text-xs font-semibold text-muted-foreground uppercase tracking-wider"
-              >
-                Description
-              </Label>
-              <Input
-                ref={inputRef}
-                id="tx-desc"
-                data-ocid="add_transaction.description_input"
-                placeholder="e.g. Shoprite Groceries"
-                value={desc}
-                onChange={(e) => setDesc(e.target.value)}
-                className="rounded-xl border-border/50 bg-muted/50 text-sm"
-              />
-            </div>
-
-            {/* Amount */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="tx-amount"
-                className="text-xs font-semibold text-muted-foreground uppercase tracking-wider"
-              >
-                Amount (₦)
-              </Label>
-              <Input
-                id="tx-amount"
-                data-ocid="add_transaction.amount_input"
-                type="number"
-                placeholder="0.00"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="rounded-xl border-border/50 bg-muted/50 text-sm"
-              />
-            </div>
-
-            {/* Category */}
-            <div className="flex flex-col gap-1.5">
-              <Label
-                htmlFor="tx-cat"
-                className="text-xs font-semibold text-muted-foreground uppercase tracking-wider"
-              >
-                Category
-              </Label>
-              <select
-                id="tx-cat"
-                data-ocid="add_transaction.category_select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="rounded-xl border border-border/50 bg-muted/50 text-sm px-3 py-2 text-foreground w-full focus:outline-none focus:ring-2 focus:ring-ring/50"
-              >
-                {CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Actions */}
-            <div className="flex gap-3 mt-2">
-              <Button
-                type="button"
-                variant="outline"
-                data-ocid="add_transaction.cancel_button"
-                onClick={onClose}
-                className="flex-1 rounded-xl"
-              >
-                Cancel
-              </Button>
-              <Button
-                type="submit"
-                data-ocid="add_transaction.submit_button"
-                disabled={!desc || !amount}
-                className="flex-1 rounded-xl"
-                style={{
-                  background: "oklch(var(--primary))",
-                  color: "oklch(var(--primary-foreground))",
-                }}
-              >
-                Save Entry
-              </Button>
-            </div>
-          </form>
+    <div
+      className="rounded-2xl overflow-hidden"
+      style={{
+        background: "oklch(var(--muted) / 0.5)",
+        border: "1px solid oklch(var(--border) / 0.4)",
+      }}
+    >
+      <div className="flex divide-x px-1 py-3">
+        <div className="flex-1 flex flex-col items-center gap-0.5 px-2">
+          <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+            Received · {periodLabel}
+          </span>
+          <span
+            className="text-sm font-bold"
+            style={{ color: "oklch(var(--accent))" }}
+          >
+            +{formatNaira(received)}
+          </span>
         </div>
-      </DialogContent>
-    </Dialog>
+        <div className="flex-1 flex flex-col items-center gap-0.5 px-2">
+          <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+            Spent · {periodLabel}
+          </span>
+          <span
+            className="text-sm font-bold"
+            style={{ color: "oklch(var(--destructive))" }}
+          >
+            −{formatNaira(spent)}
+          </span>
+        </div>
+        <div className="flex-1 flex flex-col items-center gap-0.5 px-2">
+          <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-widest">
+            Net
+          </span>
+          <span
+            className="text-sm font-bold"
+            style={{
+              color:
+                received - spent >= 0
+                  ? "oklch(var(--accent))"
+                  : "oklch(var(--destructive))",
+            }}
+          >
+            {received - spent >= 0 ? "+" : "−"}
+            {formatNaira(Math.abs(received - spent))}
+          </span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -491,13 +435,14 @@ function AddTransactionModal({
 export default function OverviewPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("Monthly");
   const [fabOpen, setFabOpen] = useState(false);
-  const modes: ViewMode[] = ["Daily", "Monthly", "Annual"];
+  const modes: ViewMode[] = ["Daily", "Weekly", "Monthly", "Annual"];
   const {
     safeToSpend,
     safeToSpendPercent,
     startingBalance,
     currentBalance,
     transactions,
+    accounts,
   } = mockData;
 
   const delta = currentBalance - startingBalance;
@@ -506,10 +451,32 @@ export default function OverviewPage() {
   const aiParsedCount = recentTxs.filter((t) => t.isAutoParsed).length;
 
   return (
-    <div className="flex flex-col gap-5 pb-28" data-ocid="overview.page">
-      {/* ── View Mode Toggle ── */}
+    <div
+      className="flex flex-col gap-4 pb-28 relative"
+      data-ocid="overview.page"
+    >
+      {/* ── Safe to Spend Ring Card ── */}
       <div
-        className="flex items-center rounded-2xl p-1 self-center mt-1"
+        className="glass-card glow-inner overflow-hidden relative"
+        data-ocid="overview.safe_to_spend_card"
+      >
+        <div
+          className="absolute inset-0 pointer-events-none"
+          aria-hidden="true"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 60% at 50% 100%, oklch(var(--accent) / 0.07) 0%, transparent 70%)",
+          }}
+        />
+        <CircularProgressRing
+          percent={safeToSpendPercent}
+          value={safeToSpend}
+        />
+      </div>
+
+      {/* ── View Mode Tabs (below Safe to Spend) ── */}
+      <div
+        className="flex items-center rounded-2xl p-1 self-stretch"
         data-ocid="overview.view_toggle"
         style={{ background: "oklch(var(--muted))" }}
       >
@@ -519,7 +486,7 @@ export default function OverviewPage() {
             type="button"
             data-ocid={`overview.tab.${mode.toLowerCase()}`}
             onClick={() => setViewMode(mode)}
-            className="relative px-5 py-1.5 rounded-xl text-xs font-bold transition-smooth"
+            className="relative flex-1 py-1.5 rounded-xl text-xs font-bold transition-smooth"
             style={{
               background:
                 viewMode === mode ? "oklch(var(--primary))" : "transparent",
@@ -538,62 +505,8 @@ export default function OverviewPage() {
         ))}
       </div>
 
-      {/* ── Safe to Spend Ring Card ── */}
-      <div
-        className="glass-card glow-inner overflow-hidden relative"
-        data-ocid="overview.safe_to_spend_card"
-      >
-        {/* Background radial accent */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          aria-hidden="true"
-          style={{
-            background:
-              "radial-gradient(ellipse 60% 60% at 50% 100%, oklch(var(--accent) / 0.07) 0%, transparent 70%)",
-          }}
-        />
-        <CircularProgressRing
-          percent={safeToSpendPercent}
-          value={safeToSpend}
-        />
-
-        {/* Quick stats strip */}
-        <div
-          className="flex divide-x"
-          style={{ borderTop: "1px solid oklch(var(--border) / 0.5)" }}
-        >
-          <div className="flex-1 flex flex-col items-center py-3">
-            <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest">
-              Inflow
-            </span>
-            <span
-              className="text-sm font-bold"
-              style={{ color: "oklch(var(--accent))" }}
-            >
-              +{formatNaira(160000)}
-            </span>
-          </div>
-          <div className="flex-1 flex flex-col items-center py-3">
-            <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest">
-              Outflow
-            </span>
-            <span className="text-sm font-bold text-foreground">
-              −{formatNaira(220900)}
-            </span>
-          </div>
-          <div className="flex-1 flex flex-col items-center py-3">
-            <span className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest">
-              Saved
-            </span>
-            <span
-              className="text-sm font-bold"
-              style={{ color: "oklch(var(--accent))" }}
-            >
-              {formatNaira(75000)}
-            </span>
-          </div>
-        </div>
-      </div>
+      {/* ── Period Detail Panel (tab-driven) ── */}
+      <PeriodDetailPanel mode={viewMode} transactions={transactions} />
 
       {/* ── Balance Cards ── */}
       <div className="flex gap-3" data-ocid="overview.balance_section">
@@ -621,17 +534,15 @@ export default function OverviewPage() {
           <h3 className="text-base font-bold text-foreground">
             Recent Activity
           </h3>
-          <button
-            type="button"
-            data-ocid="overview.view_all_button"
+          <Link
+            to="/transactions"
+            data-ocid="overview.transactions_button"
             className="flex items-center gap-0.5 text-xs font-semibold transition-smooth hover:opacity-80"
             style={{ color: "oklch(var(--accent))" }}
           >
-            View all <ChevronRight size={12} />
-          </button>
+            Transactions <ChevronRight size={12} />
+          </Link>
         </div>
-
-        {/* Summary strip */}
         <div
           className="flex items-center gap-3 px-4 py-2.5 rounded-2xl mb-3"
           style={{
@@ -656,7 +567,6 @@ export default function OverviewPage() {
             {recentTxs.length} items
           </Badge>
         </div>
-
         <div
           className="glass-card glow-inner px-4 py-1"
           data-ocid="overview.activity_list"
@@ -667,14 +577,15 @@ export default function OverviewPage() {
         </div>
       </section>
 
-      {/* ── FAB ── */}
+      {/* ── FAB — fixed above bottom nav ── */}
       <button
         type="button"
         data-ocid="overview.add_button"
         onClick={() => setFabOpen(true)}
         aria-label="Add transaction"
-        className="fixed bottom-24 right-5 w-14 h-14 rounded-full flex items-center justify-center transition-smooth hover:scale-110 active:scale-95 z-40"
+        className="fixed right-4 w-14 h-14 rounded-full flex items-center justify-center transition-smooth hover:scale-110 active:scale-95 z-40"
         style={{
+          bottom: "80px",
           background:
             "linear-gradient(135deg, oklch(var(--primary)), oklch(0.42 0.16 265))",
           color: "oklch(var(--primary-foreground))",
@@ -685,8 +596,16 @@ export default function OverviewPage() {
         <Plus size={24} strokeWidth={2.5} />
       </button>
 
-      {/* ── Add Transaction Modal ── */}
-      <AddTransactionModal open={fabOpen} onClose={() => setFabOpen(false)} />
+      {/* ── Unified Transaction Form ── */}
+      <TransactionForm
+        open={fabOpen}
+        onClose={() => setFabOpen(false)}
+        onSubmit={(data) => {
+          console.log("New transaction:", data);
+          setFabOpen(false);
+        }}
+        accounts={accounts.map((a) => ({ id: a.id, name: a.bankName }))}
+      />
     </div>
   );
 }

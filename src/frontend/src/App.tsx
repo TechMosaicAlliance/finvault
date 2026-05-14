@@ -1,4 +1,5 @@
 import { Layout } from "@/components/Layout";
+import { SettingsProvider } from "@/context/SettingsContext";
 import { mockData } from "@/data/mockData";
 import {
   Outlet,
@@ -13,6 +14,8 @@ const OverviewPage = lazy(() => import("@/pages/OverviewPage"));
 const AnalyticsPage = lazy(() => import("@/pages/AnalyticsPage"));
 const AccountsPage = lazy(() => import("@/pages/AccountsPage"));
 const MilestonesPage = lazy(() => import("@/pages/MilestonesPage"));
+const TransactionsPage = lazy(() => import("@/pages/TransactionsPage"));
+const SettingsPage = lazy(() => import("@/pages/SettingsPage"));
 
 function AppShell() {
   const isAlert = mockData.burnRate < 1;
@@ -61,12 +64,25 @@ const milestonesRoute = createRoute({
   path: "/milestones",
   component: MilestonesPage,
 });
+const transactionsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/transactions",
+  component: TransactionsPage,
+});
+
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/settings",
+  component: SettingsPage,
+});
 
 const routeTree = rootRoute.addChildren([
   overviewRoute,
+  transactionsRoute,
   analyticsRoute,
   accountsRoute,
   milestonesRoute,
+  settingsRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -78,5 +94,9 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <SettingsProvider>
+      <RouterProvider router={router} />
+    </SettingsProvider>
+  );
 }
